@@ -22,7 +22,7 @@
                 </span>
             </a>
 
-            <ul class="nav-links">
+            <ul class="nav-links" id="navLinks">
                 <li><a href="#hero">Home / Book</a></li>
                 <li><a href="#fleet">Cars</a></li>
                 <li><a href="#reviews">Reviews</a></li>
@@ -30,6 +30,11 @@
             </ul>
 
             <div class="nav-actions">
+                <button class="nav-menu-toggle" id="navMenuToggle" type="button" aria-label="Open navigation menu" aria-controls="navLinks" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Change theme">
                     <span class="icon-svg icon-sun" style="display: none;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42"/></svg>
@@ -43,10 +48,11 @@
                     <span class="icon-svg">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
                     </span>
-                    WhatsApp
+                    <span class="header-wa-label">WhatsApp</span>
                 </a>
             </div>
         </div>
+        <button class="nav-menu-backdrop" id="navMenuBackdrop" type="button" aria-label="Close navigation menu" tabindex="-1"></button>
     </nav>
 
     <!-- HERO SECTION WITH INTEGRATED SEARCH BOX -->
@@ -92,14 +98,8 @@
 
         <div class="compact-group">
             <label class="compact-label" for="mainCarSelect">Car</label>
-            <select class="compact-input" id="mainCarSelect" onchange="updateCalculation()">
-                <option value="Perodua Axia SE|120">Perodua Axia SE (RM120/day)</option>
-                <option value="Perodua Myvi 1.5A|140">Perodua Myvi 1.5A (RM140/day)</option>
-                <option value="Perodua Bezza 1.3A|150">Perodua Bezza 1.3A (RM150/day)</option>
-                <option value="Toyota Vios 1.5A|220">Toyota Vios 1.5A (RM220/day)</option>
-                <option value="Perodua Alza New Model|260">Perodua Alza New (RM260/day)</option>
-                <option value="Mini Bus / Hyundai Starex|420">Hyundai Starex (RM420/day)</option>
-            </select>
+            <input class="compact-input" id="mainCarSelect" type="text" list="availableCars" value="Perodua Axia" placeholder="Search for a car" autocomplete="off" oninput="updateCalculation()">
+            <datalist id="availableCars"></datalist>
         </div>
 
         <div class="compact-group">
@@ -123,7 +123,7 @@
     <div class="search-bottom-bar">
         <div class="total-price-text">
             <span>Estimated price (<span id="sumDays">1 day</span>):</span>
-            <strong id="sumTotalPrice">RM 120</strong>
+            <strong id="sumTotalPrice">RM 100</strong>
         </div>
 
         <label class="driver-checkbox" for="driverOption">
@@ -192,8 +192,8 @@
         <div class="container">
             <div class="section-header reveal-on-scroll">
                 <span class="section-subtitle">Cars for rent</span>
-                <h2 class="section-title">Our cars</h2>
-                <p class="section-desc">Choose a car for an easy trip in Penang and Malaysia.</p>
+                <h2 class="section-title">Our Cars</h2>
+                <p class="section-desc">We have over 20 model of car you can choose. And this our popular cars for your trip in Penang and Malaysia.</p>
             </div>
 
             <div class="filter-tabs reveal-on-scroll">
@@ -201,7 +201,6 @@
                 <button class="filter-btn" onclick="filterFleet('compact', this)">Small cars</button>
                 <button class="filter-btn" onclick="filterFleet('sedan', this)">Sedan</button>
                 <button class="filter-btn" onclick="filterFleet('mpv', this)">Family cars</button>
-                <button class="filter-btn" onclick="filterFleet('van', this)">Buses & vans</button>
             </div>
 
 <div class="cars-grid" id="fleetGrid">
@@ -249,13 +248,13 @@
         </div>
     </div>
 
-    <div class="car-card reveal-on-scroll delay-3" data-category="compact">
+    <div class="car-card reveal-on-scroll delay-3" data-category="compact" hidden>
         <div class="car-image-box">
             <span class="car-tag-category">Small car</span>
             <img src="images/myvi-lagi-best.png" alt="Perodua Myvi Lagi Best">
         </div>
         <div class="car-details">
-            <h3 class="car-name">Perodua Myvi Lagi Best</h3>
+            <h3 class="car-name">Perodua Myvi</h3>
             <div class="car-specs">
                 <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 5 seats</span>
                 <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
@@ -291,7 +290,7 @@
         </div>
     </div>
 
-    <div class="car-card reveal-on-scroll delay-2" data-category="compact">
+    <div class="car-card reveal-on-scroll delay-2" data-category="compact" hidden>
         <div class="car-image-box">
             <span class="car-tag-category">Small car Hybrid</span>
             <img src="images/prius.png" alt="Toyota Prius C Hybrid">
@@ -313,7 +312,7 @@
     </div>
 
     <!-- SEDAN -->
-    <div class="car-card reveal-on-scroll delay-3" data-category="sedan">
+    <div class="car-card reveal-on-scroll delay-3" data-category="sedan" hidden>
         <div class="car-image-box">
             <span class="car-tag-category">Sedan</span>
             <img src="images/saga-flx.png" alt="Proton Saga FLX">
@@ -334,7 +333,7 @@
         </div>
     </div>
 
-    <div class="car-card reveal-on-scroll delay-1" data-category="sedan">
+    <div class="car-card reveal-on-scroll delay-1" data-category="sedan" hidden>
         <div class="car-image-box">
             <span class="car-tag-category">Sedan</span>
             <img src="images/saga.png" alt="Proton Saga VVT (New)">
@@ -482,7 +481,7 @@
         </div>
     </div>
 
-    <div class="car-card reveal-on-scroll delay-2" data-category="mpv">
+    <div class="car-card reveal-on-scroll delay-2" data-category="mpv" hidden>
         <div class="car-image-box">
             <span class="car-tag-category">Hybrid SUV</span>
             <img src="images/x90.png" alt="Proton X90 Hybrid">
@@ -503,7 +502,7 @@
         </div>
     </div>
 
-    <div class="car-card reveal-on-scroll delay-3" data-category="mpv">
+    <div class="car-card reveal-on-scroll delay-3" data-category="mpv" hidden>
         <div class="car-image-box">
             <span class="car-tag-category">SUV</span>
             <img src="images/fortuner.png" alt="Toyota Fortuner">
@@ -546,7 +545,7 @@
         </div>
     </div>
 
-    <div class="car-card reveal-on-scroll delay-2" data-category="mpv">
+    <div class="car-card reveal-on-scroll delay-2" data-category="mpv" hidden>
         <div class="car-image-box">
             <span class="car-tag-category">Large family car</span>
             <img src="images/staria.png" alt="Hyundai Staria (11S)">
@@ -567,7 +566,7 @@
         </div>
     </div>
 
-    <div class="car-card reveal-on-scroll delay-3" data-category="mpv">
+    <div class="car-card reveal-on-scroll delay-3" data-category="mpv" hidden>
         <div class="car-image-box">
             <span class="car-tag-category">Large family car</span>
             <img src="images/vellfire-8s.png" alt="Toyota Vellfire (8S)">
@@ -588,7 +587,7 @@
         </div>
     </div>
 
-    <div class="car-card reveal-on-scroll delay-1" data-category="mpv">
+    <div class="car-card reveal-on-scroll delay-1" data-category="mpv" hidden>
         <div class="car-image-box">
             <span class="car-tag-category">Large family car</span>
             <img src="images/vellfire.png" alt="Toyota Vellfire (7S)">
@@ -609,7 +608,7 @@
         </div>
     </div>
 
-    <div class="car-card reveal-on-scroll delay-2" data-category="mpv">
+    <div class="car-card reveal-on-scroll delay-2" data-category="mpv" hidden>
         <div class="car-image-box">
             <span class="car-tag-category">Large family car</span>
             <img src="images/alphard.png" alt="Toyota Alphard (7S)">
@@ -631,7 +630,7 @@
     </div>
 
     <!-- VAN -->
-    <div class="car-card reveal-on-scroll delay-3" data-category="van">
+    <div class="car-card reveal-on-scroll delay-3" data-category="van" hidden>
         <div class="car-image-box">
             <span class="car-tag-category">Van</span>
             <img src="images/hiace.png" alt="Toyota Hiace (11S)">
@@ -652,7 +651,7 @@
         </div>
     </div>
 
-    <div class="car-card reveal-on-scroll delay-1" data-category="van">
+    <div class="car-card reveal-on-scroll delay-1" data-category="van" hidden>
         <div class="car-image-box">
             <span class="car-tag-category">Van</span>
             <img src="images/urvan.png" alt="Nissan Urvan (14S)">
@@ -673,7 +672,7 @@
         </div>
     </div>
 
-    <div class="car-card reveal-on-scroll delay-2" data-category="van">
+    <div class="car-card reveal-on-scroll delay-2" data-category="van" hidden>
         <div class="car-image-box">
             <span class="car-tag-category">Tour van</span>
             <img src="images/placer-x.png" alt="CAM Placer-X (18S)">
@@ -694,7 +693,7 @@
         </div>
     </div>
 
-    <div class="car-card reveal-on-scroll delay-3" data-category="van">
+    <div class="car-card reveal-on-scroll delay-3" data-category="van" hidden>
         <div class="car-image-box">
             <span class="car-tag-category">Tour van</span>
             <img src="images/joylong.png" alt="Joylong Komuter (18S)">

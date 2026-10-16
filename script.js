@@ -35,13 +35,57 @@ themeToggleBtn.addEventListener('click', () => {
     }
 });
 
+// Mobile navigation drawer
+const navbar = document.querySelector('.navbar');
+const navMenuToggle = document.getElementById('navMenuToggle');
+const navMenuBackdrop = document.getElementById('navMenuBackdrop');
+const navLinks = document.getElementById('navLinks');
+navLinks.setAttribute('aria-hidden', String(window.matchMedia('(max-width: 768px)').matches));
+
+function setNavMenuOpen(isOpen) {
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    navbar.classList.toggle('nav-menu-open', isOpen);
+    navMenuToggle.setAttribute('aria-expanded', String(isOpen));
+    navMenuToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+    navLinks.setAttribute('aria-hidden', String(!isOpen && isMobile));
+    document.body.classList.toggle('nav-menu-open', isOpen);
+}
+
+navMenuToggle.addEventListener('click', () => {
+    setNavMenuOpen(navMenuToggle.getAttribute('aria-expanded') !== 'true');
+});
+
+navMenuBackdrop.addEventListener('click', () => setNavMenuOpen(false));
+navLinks.addEventListener('click', (event) => {
+    if (event.target.closest('a')) {
+        setNavMenuOpen(false);
+    }
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && navMenuToggle.getAttribute('aria-expanded') === 'true') {
+        setNavMenuOpen(false);
+        navMenuToggle.focus();
+    }
+});
+
+window.matchMedia('(min-width: 769px)').addEventListener('change', (event) => {
+    if (event.matches) {
+        setNavMenuOpen(false);
+        navLinks.removeAttribute('aria-hidden');
+    } else {
+        setNavMenuOpen(false);
+        navLinks.setAttribute('aria-hidden', 'true');
+    }
+});
+
 // Fleet Filtering
 function filterFleet(category, element) {
     const buttons = document.querySelectorAll('.filter-btn');
     buttons.forEach(btn => btn.classList.remove('active'));
     element.classList.add('active');
 
-    const carCards = document.querySelectorAll('.car-card');
+    const carCards = document.querySelectorAll('#fleetGrid .car-card:not([hidden])');
     carCards.forEach(card => {
         if (category === 'all' || card.getAttribute('data-category') === category) {
             card.style.display = 'flex';
@@ -51,15 +95,20 @@ function filterFleet(category, element) {
     });
 }
 
+const availableCars = document.getElementById('availableCars');
+const fleetCards = Array.from(document.querySelectorAll('#fleetGrid .car-card'));
+fleetCards.forEach(card => {
+    const carName = card.querySelector('.car-name').textContent.trim();
+    const dailyRate = card.querySelector('.price-amount').textContent.trim();
+    const option = document.createElement('option');
+    option.value = carName;
+    option.label = `${dailyRate} per day`;
+    availableCars.appendChild(option);
+});
+
 // Select Car from Fleet Grid into Hero Form
 function selectCarForBooking(carName, rate) {
-    const select = document.getElementById('mainCarSelect');
-    for (let i = 0; i < select.options.length; i++) {
-        if (select.options[i].value.startsWith(carName)) {
-            select.selectedIndex = i;
-            break;
-        }
-    }
+    document.getElementById('mainCarSelect').value = carName;
     updateCalculation();
     scrollToBooking();
 }
@@ -68,11 +117,27 @@ function scrollToBooking() {
     document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
 }
 
+function getSelectedCar() {
+    const carField = document.getElementById('mainCarSelect');
+    const carName = carField.value.trim();
+    const carCard = fleetCards
+        .find(card => card.querySelector('.car-name').textContent.trim() === carName);
+    const dailyRate = carCard
+        ? parseInt(carCard.querySelector('.price-amount').textContent.replace(/[^\d]/g, ''), 10)
+        : NaN;
+
+    return { carField, carName, dailyRate };
+}
+
 // Calculation Logic
 function updateCalculation() {
-    const carVal = document.getElementById('mainCarSelect').value;
-    const [carName, carRateStr] = carVal.split('|');
-    const dailyRate = parseInt(carRateStr, 10);
+    const { carField, dailyRate } = getSelectedCar();
+
+    carField.setCustomValidity(Number.isNaN(dailyRate) ? 'Choose a car from the list.' : '');
+    if (Number.isNaN(dailyRate)) {
+        document.getElementById('sumTotalPrice').innerText = 'Choose a car';
+        return;
+    }
 
     const pickDateVal = new Date(document.getElementById('pickDate').value);
     const returnDateVal = new Date(document.getElementById('returnDate').value);
@@ -91,9 +156,12 @@ function updateCalculation() {
 
 // WhatsApp Booking Trigger
 function sendBookingToWhatsApp() {
-    const carVal = document.getElementById('mainCarSelect').value;
-    const [carName, carRateStr] = carVal.split('|');
-    const dailyRate = parseInt(carRateStr, 10);
+    const { carField, carName, dailyRate } = getSelectedCar();
+    if (Number.isNaN(dailyRate)) {
+        carField.setCustomValidity('Choose a car from the list.');
+        carField.reportValidity();
+        return;
+    }
 
     const driverLabel = document.getElementById('driverOption').checked ? 'With a driver' : 'Drive myself';
 
