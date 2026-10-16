@@ -135,7 +135,7 @@ function updateCalculation() {
 
     carField.setCustomValidity(Number.isNaN(dailyRate) ? 'Choose a car from the list.' : '');
     if (Number.isNaN(dailyRate)) {
-        document.getElementById('sumTotalPrice').innerText = 'Choose a car';
+        document.getElementById('sumTotalPrice').innerText = 'RM 0';
         return;
     }
 
