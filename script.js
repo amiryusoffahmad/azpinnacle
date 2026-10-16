@@ -74,10 +74,6 @@ function updateCalculation() {
     const [carName, carRateStr] = carVal.split('|');
     const dailyRate = parseInt(carRateStr, 10);
 
-    const driverVal = document.getElementById('driverOption').value;
-    const [driverMode, driverFeeStr] = driverVal.split('|');
-    const driverDailyFee = parseInt(driverFeeStr, 10);
-
     const pickDateVal = new Date(document.getElementById('pickDate').value);
     const returnDateVal = new Date(document.getElementById('returnDate').value);
 
@@ -87,49 +83,10 @@ function updateCalculation() {
         diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     }
 
-    const totalCost = (dailyRate + driverDailyFee) * diffDays;
+    const totalCost = dailyRate * diffDays;
 
     // Update harga terus pada butang
     document.getElementById('sumTotalPrice').innerText = `RM ${totalCost}`;
-}
-
-// WhatsApp Trigger
-function sendBookingToWhatsApp() {
-    const carVal = document.getElementById('mainCarSelect').value;
-    const [carName, carRateStr] = carVal.split('|');
-    const dailyRate = parseInt(carRateStr, 10);
-
-    const driverVal = document.getElementById('driverOption').value;
-    const [driverMode, driverFeeStr] = driverVal.split('|');
-    const driverDailyFee = parseInt(driverFeeStr, 10);
-    const driverLabel = driverMode === 'driver' ? 'Sekali Pemandu (With Driver)' : 'Pandu Sendiri (Self Drive)';
-
-    const pickDate = document.getElementById('pickDate').value;
-    const pickTime = document.getElementById('pickTime').value;
-    const returnDate = document.getElementById('returnDate').value;
-    const returnTime = document.getElementById('returnTime').value;
-
-    const pickDateObj = new Date(pickDate);
-    const returnDateObj = new Date(returnDate);
-    let diffDays = 1;
-    if (returnDateObj > pickDateObj) {
-        const diffTime = Math.abs(returnDateObj - pickDateObj);
-        diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    }
-    const totalCost = (dailyRate + driverDailyFee) * diffDays;
-
-    const textMsg = `Salam AZ Pinnacle Auto (Penang Car Rental),\n` +
-                    `Saya nak semak kekosongan sewa kereta:\n\n` +
-                    `🚗 Model Kereta: ${carName}\n` +
-                    `🛞 Mod Pemanduan: ${driverLabel}\n` +
-                    `📅 Ambil (Pickup): ${pickDate} @ ${pickTime}\n` +
-                    `📅 Pulang (Return): ${returnDate} @ ${returnTime} (${diffDays} Hari)\n` +
-                    `💰 Anggaran Jumlah: RM ${totalCost}\n\n` +
-                    `Adakah kereta ini available pada tarikh tersebut? Terima kasih!`;
-
-    const waPhone = "60177644262";
-    const waUrl = `https://wa.me/${waPhone}?text=${encodeURIComponent(textMsg)}`;
-    window.open(waUrl, '_blank');
 }
 
 // WhatsApp Booking Trigger
@@ -138,18 +95,14 @@ function sendBookingToWhatsApp() {
     const [carName, carRateStr] = carVal.split('|');
     const dailyRate = parseInt(carRateStr, 10);
 
-    const driverVal = document.getElementById('driverOption').value;
-    const [driverMode, driverFeeStr] = driverVal.split('|');
-    const driverDailyFee = parseInt(driverFeeStr, 10);
-    const driverLabel = driverMode === 'driver' ? 'Sekali Pemandu (With Driver)' : 'Pandu Sendiri (Self Drive)';
+    const driverLabel = document.getElementById('driverOption').checked ? 'With a driver' : 'Drive myself';
 
     const pickDate = document.getElementById('pickDate').value;
     const pickTime = document.getElementById('pickTime').value;
     const returnDate = document.getElementById('returnDate').value;
     const returnTime = document.getElementById('returnTime').value;
 
-    const custName = document.getElementById('custName').value.trim() || 'Pelanggan';
-    const custLoc = document.getElementById('custLoc').value.trim() || 'Penang Airport / Bayan Lepas';
+    const pickupLocation = document.getElementById('pickupLocation').value.trim() || 'Not selected';
 
     const pickDateObj = new Date(pickDate);
     const returnDateObj = new Date(returnDate);
@@ -158,18 +111,17 @@ function sendBookingToWhatsApp() {
         const diffTime = Math.abs(returnDateObj - pickDateObj);
         diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     }
-    const totalCost = (dailyRate + driverDailyFee) * diffDays;
+    const totalCost = dailyRate * diffDays;
 
-    const textMsg = `Salam AZ Pinnacle Auto (Penang Car Rental),\n` +
-                    `Saya nak semak kekosongan sewa kereta:\n\n` +
-                    `👤 Nama: ${custName}\n` +
-                    `🚗 Model Kereta: ${carName}\n` +
-                    `🛞 Mod Pemanduan: ${driverLabel}\n` +
-                    `📅 Ambil (Pickup): ${pickDate} @ ${pickTime}\n` +
-                    `📅 Pulang (Return): ${returnDate} @ ${returnTime} (${diffDays} Hari)\n` +
-                    `📍 Lokasi / Destinasi: ${custLoc}\n` +
-                    `💰 Anggaran Jumlah: RM ${totalCost}\n\n` +
-                    `Adakah kereta ini available pada tarikh tersebut? Terima kasih!`;
+    const textMsg = `Hello AZ Pinnacle Auto (Penang Car Rental),\n` +
+                    `I would like to check if a car is available:\n\n` +
+                    `🚗 Car model: ${carName}\n` +
+                    `🛞 Driving option: ${driverLabel}\n` +
+                    `📍 Pickup location: ${pickupLocation}\n` +
+                    `📅 Pick-up: ${pickDate} at ${pickTime}\n` +
+                    `📅 Return: ${returnDate} at ${returnTime} (${diffDays} days)\n` +
+                    `💰 Estimated total: RM ${totalCost}\n\n` +
+                    `Is this car available on these dates? Thank you!`;
 
     const waPhone = "60177644262";
     const waUrl = `https://wa.me/${waPhone}?text=${encodeURIComponent(textMsg)}`;

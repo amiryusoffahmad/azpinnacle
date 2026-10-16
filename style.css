@@ -96,45 +96,56 @@ html[data-theme="light"] .navbar { background-color: rgba(255, 255, 255, 0.88); 
 .brand-logo {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     text-decoration: none;
 }
 
 .nav-logo-img {
-    width: 42px;
-    height: 42px;
+    display: block;
+    width: 44px;
+    height: 44px;
     object-fit: cover;
-    border-radius: 50%;
     border: 1px solid var(--border-color);
+    border-radius: 50%;
     flex-shrink: 0;
 }
 
-/* Susun teks secara menegak (column) */
+.footer-brand .nav-logo-img { width: 52px; height: 52px; }
+
 .brand-text {
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: left;
-    line-height: 1.2;
+    line-height: 1;
 }
 
-/* AZ PINNACLE AUTO (Tajuk Atas) */
 .brand-title {
-    font-size: 0.95rem;
-    font-weight: 800;
-    color: var(--text-primary);
-    letter-spacing: -0.01em;
-    display: block;
+    display: flex;
+    gap: 4px;
+    white-space: nowrap;
+    font-family: Impact, "Arial Black", sans-serif;
+    font-size: 1.08rem;
+    font-weight: 900;
+    color: #f4f4f5;
+    letter-spacing: 0.015em;
+    text-shadow: 0 2px 3px #000000;
 }
+.brand-title-red { color: #ef2029; }
+html[data-theme="light"] .brand-title,
+html[data-theme="light"] .brand-sub,
+html[data-theme="light"] .brand-sub span { color: #09090b; }
+html[data-theme="light"] .brand-title-red { color: #ef2029; }
 
-/* Penang Car Rental (Sub-tajuk Bawah) */
 .brand-sub {
-    font-size: 0.72rem;
-    font-weight: 500;
-    color: var(--text-muted);
+    margin-top: 5px;
+    color: var(--text-primary);
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
     display: block;
-    margin-top: 2px;
 }
+.brand-sub span { margin-left: 4px; color: var(--text-secondary); font-size: 0.47rem; letter-spacing: 0.18em; }
 .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
 .nav-links a { font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); }
 .nav-links a:hover { color: var(--accent-red); }
@@ -174,9 +185,65 @@ html[data-theme="light"] .hero {
 }
 .tag-pulse { width: 6px; height: 6px; border-radius: 50%; background-color: #ffffff; }
 
-.hero-title { font-size: 2.8rem; font-weight: 800; line-height: 1.15; margin-bottom: 12px; color: #ffffff; }
-.hero-title span { color: var(--text-primary); opacity: 0.9; }
-html[data-theme="light"] .hero-title { color: #09090b; }
+.hero-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0;
+    font-family: Impact, "Arial Black", sans-serif;
+    font-size: clamp(3rem, 7.5vw, 6rem);
+    font-weight: 900;
+    line-height: 0.82;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.45);
+}
+.hero-title-silver {
+    color: #e5e7eb;
+    background: linear-gradient(180deg, #ffffff 0%, #aeb4bd 40%, #f9fafb 55%, #686d75 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 4px 2px #09090b);
+}
+html[data-theme="light"] .hero-title-silver {
+    color: #09090b;
+    background: linear-gradient(180deg, #27272a 0%, #09090b 45%, #3f3f46 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 1px rgba(0, 0, 0, 0.2));
+}
+.hero-title-red {
+    margin-top: 8px;
+    color: #ed1c24;
+    background: linear-gradient(180deg, #ff4545 0%, #ed1c24 52%, #a90008 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 4px 2px #09090b);
+}
+.hero-brand-tagline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    margin: 8px 0 12px;
+    color: #f4f4f5;
+    font-weight: 700;
+    letter-spacing: 0.34em;
+    text-shadow: 0 2px 4px #09090b;
+}
+html[data-theme="light"] .hero-brand-tagline,
+html[data-theme="light"] .hero-brand-tagline span:last-child {
+    color: #09090b;
+    text-shadow: none;
+}
+.hero-brand-tagline span:last-child {
+    color: #d4d4d8;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+}
 
 .hero-desc { font-size: 0.98rem; color: var(--text-secondary); margin: 0 auto 24px; max-width: 580px; }
 html[data-theme="light"] .hero-desc { color: #27272a; font-weight: 500; }
@@ -287,6 +354,14 @@ html[data-theme="light"] .hero-desc { color: #27272a; font-weight: 500; }
 .reviewer-avatar { width: 36px; height: 36px; border-radius: var(--radius-full); background-color: var(--bg-secondary); color: var(--text-primary); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; border: 1px solid var(--border-color); }
 .reviewer-name { font-weight: 600; font-size: 0.85rem; }
 .reviewer-meta { font-size: 0.72rem; color: var(--text-muted); }
+.more-reviews { display: flex; justify-content: center; margin-top: 24px; }
+.more-reviews-link {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 10px 18px; border: 1px solid var(--border-color); border-radius: var(--radius-sm);
+    color: var(--text-primary); font-size: 0.85rem; font-weight: 600;
+    transition: all var(--transition-speed);
+}
+.more-reviews-link:hover { color: #ffffff; background-color: var(--accent-red); border-color: var(--accent-red); }
 
 .location-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
 .info-list { display: flex; flex-direction: column; gap: 16px; margin-top: 18px; }
@@ -295,12 +370,17 @@ html[data-theme="light"] .hero-desc { color: #27272a; font-weight: 500; }
 .info-content h5 { font-size: 0.85rem; font-weight: 600; margin-bottom: 2px; }
 .info-content p { font-size: 0.82rem; color: var(--text-secondary); }
 .plus-code { display: inline-block; margin-top: 2px; font-size: 0.72rem; font-weight: 500; color: var(--accent-red); }
+.social-links { display: flex; flex-wrap: wrap; gap: 12px; }
+.social-links a { display: inline-flex; align-items: center; gap: 5px; color: var(--text-secondary); font-size: 0.82rem; }
+.social-links a:hover { color: var(--accent-red); }
 
 .map-container { width: 100%; height: 340px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-color); }
 .map-container iframe { width: 100%; height: 100%; border: 0; }
 
 .footer { background-color: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 48px 0 24px; margin-top: 40px; }
 .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 32px; margin-bottom: 32px; }
+.footer-brand .brand-title { font-size: 1.4rem; }
+.footer-brand .brand-sub { font-size: 0.65rem; }
 .footer-brand p { color: var(--text-secondary); font-size: 0.82rem; margin-top: 10px; max-width: 320px; }
 .footer-col h5 { font-size: 0.88rem; font-weight: 700; margin-bottom: 12px; }
 .footer-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
@@ -326,13 +406,11 @@ html[data-theme="light"] .hero-desc { color: #27272a; font-weight: 500; }
     .container { padding: 0 16px; }
     .nav-links { display: none; }
     .hero { padding: 75px 0 50px; }
-    .hero-title { font-size: 2.2rem; }
     .hero-search-box { padding: 18px; }
     .search-summary-bar { flex-direction: column; align-items: stretch; text-align: center; }
     .summary-details { justify-content: center; }
 }
 @media (max-width: 640px) {
-    .hero-title { font-size: 1.8rem; }
     .cars-grid, .features-grid { grid-template-columns: 1fr; }
     .input-inline { flex-direction: column; }
     .time-input { width: 100%; }
@@ -382,13 +460,13 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
     backdrop-filter: blur(12px);
 }
 
-/* Baris 1: Area Input Fields */
+/* Search fields in a clean two-row layout */
 .compact-form-row {
-    display: flex;
-    align-items: flex-end;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 16px;
     width: 100%;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
 }
 
 .compact-group {
@@ -397,15 +475,8 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
     text-align: left;
 }
 
-/* Pengaturan Fleksibilitas Lebar (mencegah teks terpotong) */
-.flex-1 { 
-    flex: 1 1 auto; 
-    min-width: 190px; /* Memberikan ruang ekstra untuk teks pilihan "Pandu Sendiri (Self Drive)" */
-}
-
-.flex-2 { 
-    flex: 1.5 1 auto; 
-    min-width: 220px; 
+.compact-pickup-location {
+    min-width: 0;
 }
 
 .compact-label {
@@ -449,14 +520,33 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
 
 /* Input Waktu (Time Picker) */
 .time-pick {
-    width: 115px !important; /* Diperlebar agar format jam "10:00 AM" dan ikon tidak terpotong */
+    width: 115px !important;
     flex-shrink: 0;
     padding: 8px 4px 8px 6px !important;
     font-size: 0.75rem;
     text-align: center;
 }
 
-/* Baris 2: Total Harga & Tombol WhatsApp */
+.driver-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0 auto 0 0;
+    color: var(--text-primary);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.driver-checkbox input {
+    width: 17px;
+    height: 17px;
+    margin: 0;
+    accent-color: var(--accent-red);
+    cursor: pointer;
+}
+
+/* Total price and WhatsApp button */
 .search-bottom-bar {
     display: flex;
     align-items: center;
@@ -504,15 +594,8 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
 
 /* Responsif untuk Layar Seluler */
 @media (max-width: 900px) {
-    .compact-form-row {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-    }
-    
-    .flex-1, .flex-2 {
-        width: 100%;
-        min-width: 100%;
+    .compact-inline-inputs input[type="date"] {
+        min-width: 0;
     }
 
     .search-bottom-bar {
@@ -529,5 +612,11 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
     .btn-wa-action {
         justify-content: center;
         width: 100%;
+    }
+}
+
+@media (max-width: 560px) {
+    .compact-form-row {
+        grid-template-columns: minmax(0, 1fr);
     }
 }
