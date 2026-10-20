@@ -149,12 +149,15 @@ fleetVehicles.forEach((vehicle, index) => {
         : '<div class="car-image-placeholder">Image coming soon</div>';
     const rateText = vehicle.rate === null ? 'Contact for price' : `RM ${vehicle.rate}`;
     const rateUnit = vehicle.rate === null ? 'Quote on request' : '/ day';
+    const imageFramingClass = ['images/staria.png', 'images/myvi.png', 'images/myvi2.png'].includes(vehicle.image)
+        ? ' image-framing-tight'
+        : '';
     const card = document.createElement('article');
     card.className = `car-card reveal-on-scroll delay-${(index % 3) + 1}`;
     card.dataset.category = vehicle.category;
     card.dataset.rate = vehicle.rate === null ? '' : String(vehicle.rate);
     card.innerHTML = `
-        <div class="car-image-box">
+        <div class="car-image-box${imageFramingClass}">
             <span class="car-tag-category">${categoryLabel}</span>
             ${image}
         </div>
