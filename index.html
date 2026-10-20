@@ -76,11 +76,11 @@
 <div class="hero-search-box compact-search" id="booking">
     <!-- Search fields -->
     <div class="compact-form-row">
-        <div class="compact-group compact-pickup-location">
+        <div class="compact-group compact-location">
             <label class="compact-label" for="pickupLocation">Pickup location</label>
             <input class="compact-input" id="pickupLocation" type="text" list="pickupLocations" placeholder="Search or enter a pickup location" autocomplete="off">
             <datalist id="pickupLocations">
-                <option value="WAHDAH Mini Hub (Penang)"></option>
+                <option value="HQ Office Sungai Ara (Penang)"></option>
                 <option value="Penang International Airport (PEN) Level 2, Gate 5"></option>
                 <option value="Terminal Ferry Georgetown"></option>
                 <option value="Komtar George Town (Maybank Lobby)"></option>
@@ -96,13 +96,18 @@
             </datalist>
         </div>
 
-        <div class="compact-group">
+        <div class="compact-group compact-location">
+            <label class="compact-label" for="returnLocation">Return location</label>
+            <input class="compact-input" id="returnLocation" type="text" list="pickupLocations" placeholder="Search or enter a return location" autocomplete="off">
+        </div>
+
+        <div class="compact-group compact-car-select">
             <label class="compact-label" for="mainCarSelect">Car</label>
             <input class="compact-input" id="mainCarSelect" type="text" list="availableCars" value="" placeholder="Search for a car" autocomplete="off" oninput="updateCalculation()">
             <datalist id="availableCars"></datalist>
         </div>
 
-        <div class="compact-group">
+        <div class="compact-group compact-date-group">
             <label class="compact-label">Pickup date and time</label>
             <div class="compact-inline-inputs">
                 <input type="date" class="compact-input" id="pickDate" onchange="updateCalculation()">
@@ -110,7 +115,7 @@
             </div>
         </div>
 
-        <div class="compact-group">
+        <div class="compact-group compact-date-group">
             <label class="compact-label">Drop-off date and time</label>
             <div class="compact-inline-inputs">
                 <input type="date" class="compact-input" id="returnDate" onchange="updateCalculation()">
@@ -193,528 +198,21 @@
             <div class="section-header reveal-on-scroll">
                 <span class="section-subtitle">Cars for rent</span>
                 <h2 class="section-title">Our Cars</h2>
-                <p class="section-desc">We have over 20 model of car you can choose. And this our popular cars for your trip in Penang and Malaysia.</p>
+                <p class="section-desc">Browse our fleet by category and compare fuel, transmission, passenger capacity, and engine size.</p>
             </div>
 
             <div class="filter-tabs reveal-on-scroll">
                 <button class="filter-btn active" onclick="filterFleet('all', this)">All cars</button>
-                <button class="filter-btn" onclick="filterFleet('compact', this)">Small cars</button>
+                <button class="filter-btn" onclick="filterFleet('compact', this)">Compact Car</button>
                 <button class="filter-btn" onclick="filterFleet('sedan', this)">Sedan</button>
-                <button class="filter-btn" onclick="filterFleet('mpv', this)">Family cars</button>
+                <button class="filter-btn" onclick="filterFleet('mpv', this)">MPV</button>
+                <button class="filter-btn" onclick="filterFleet('suv', this)">SUV</button>
+                <button class="filter-btn" onclick="filterFleet('luxury-mpv', this)">Luxury MPV</button>
+                <button class="filter-btn" onclick="filterFleet('van', this)">Van</button>
             </div>
 
-<div class="cars-grid" id="fleetGrid">
-
-    <!-- HATCHBACK -->
-    <div class="car-card reveal-on-scroll delay-1" data-category="compact">
-        <div class="car-image-box">
-            <span class="car-tag-category">Small car</span>
-            <img src="images/viva.png" alt="Perodua Viva">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Perodua Viva</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 5 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 80</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Perodua Viva', 80)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="car-card reveal-on-scroll delay-2" data-category="compact">
-        <div class="car-image-box">
-            <span class="car-tag-category">Small car</span>
-            <img src="images/axia.png" alt="Perodua Axia">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Perodua Axia</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 5 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 100</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Perodua Axia', 100)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="car-card reveal-on-scroll delay-3" data-category="compact" hidden>
-        <div class="car-image-box">
-            <span class="car-tag-category">Small car</span>
-            <img src="images/myvi-lagi-best.png" alt="Perodua Myvi Lagi Best">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Perodua Myvi</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 5 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 120</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Perodua Myvi Lagi Best', 120)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="car-card reveal-on-scroll delay-1" data-category="compact">
-        <div class="car-image-box">
-            <span class="car-tag-category">Small car</span>
-            <img src="images/myvi.png" alt="Perodua Myvi Gen 3">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Perodua Myvi Gen 3</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 5 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 150</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Perodua Myvi Gen 3', 150)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="car-card reveal-on-scroll delay-2" data-category="compact" hidden>
-        <div class="car-image-box">
-            <span class="car-tag-category">Small car Hybrid</span>
-            <img src="images/prius.png" alt="Toyota Prius C Hybrid">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Toyota Prius C Hybrid</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 5 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 180</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Toyota Prius C Hybrid', 180)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- SEDAN -->
-    <div class="car-card reveal-on-scroll delay-3" data-category="sedan" hidden>
-        <div class="car-image-box">
-            <span class="car-tag-category">Sedan</span>
-            <img src="images/saga-flx.png" alt="Proton Saga FLX">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Proton Saga FLX</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 5 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 110</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Proton Saga FLX', 110)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="car-card reveal-on-scroll delay-1" data-category="sedan" hidden>
-        <div class="car-image-box">
-            <span class="car-tag-category">Sedan</span>
-            <img src="images/saga.png" alt="Proton Saga VVT (New)">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Proton Saga VVT (New)</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 5 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 130</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Proton Saga VVT (New)', 130)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="car-card reveal-on-scroll delay-2" data-category="sedan">
-        <div class="car-image-box">
-            <span class="car-tag-category">Sedan</span>
-            <img src="images/bezza.png" alt="Perodua Bezza (New)">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Perodua Bezza (New)</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 5 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 140</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Perodua Bezza (New)', 140)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="car-card reveal-on-scroll delay-3" data-category="sedan">
-        <div class="car-image-box">
-            <span class="car-tag-category">Sedan</span>
-            <img src="images/persona.png" alt="Proton Persona">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Proton Persona</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 5 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 140</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Proton Persona', 140)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="car-card reveal-on-scroll delay-1" data-category="sedan">
-        <div class="car-image-box">
-            <span class="car-tag-category">Sedan</span>
-            <img src="images/vios.png" alt="Toyota Vios">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Toyota Vios</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 5 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 180</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Toyota Vios', 180)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="car-card reveal-on-scroll delay-2" data-category="sedan">
-        <div class="car-image-box">
-            <span class="car-tag-category">Sedan</span>
-            <img src="images/city.png" alt="Honda City">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Honda City</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 5 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 250</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Honda City', 250)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- SUV -->
-    <div class="car-card reveal-on-scroll delay-3" data-category="mpv">
-        <div class="car-image-box">
-            <span class="car-tag-category">SUV</span>
-            <img src="images/aruz.png" alt="Perodua Aruz">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Perodua Aruz</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 7 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 250</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Perodua Aruz', 250)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="car-card reveal-on-scroll delay-1" data-category="mpv">
-        <div class="car-image-box">
-            <span class="car-tag-category">SUV</span>
-            <img src="images/x70.png" alt="Proton X70">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Proton X70</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 5 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 350</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Proton X70', 350)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="car-card reveal-on-scroll delay-2" data-category="mpv" hidden>
-        <div class="car-image-box">
-            <span class="car-tag-category">Hybrid SUV</span>
-            <img src="images/x90.png" alt="Proton X90 Hybrid">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Proton X90 Hybrid</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 7 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 650</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Proton X90 Hybrid', 650)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="car-card reveal-on-scroll delay-3" data-category="mpv" hidden>
-        <div class="car-image-box">
-            <span class="car-tag-category">SUV</span>
-            <img src="images/fortuner.png" alt="Toyota Fortuner">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Toyota Fortuner</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 7 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 750</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Toyota Fortuner', 750)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- LUXURY MPV -->
-    <div class="car-card reveal-on-scroll delay-1" data-category="mpv">
-        <div class="car-image-box">
-            <span class="car-tag-category">Large family car</span>
-            <img src="images/starex.png" alt="Hyundai Starex (11S)">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Hyundai Starex (11S)</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 11 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 480</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Hyundai Starex (11S)', 480)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="car-card reveal-on-scroll delay-2" data-category="mpv" hidden>
-        <div class="car-image-box">
-            <span class="car-tag-category">Large family car</span>
-            <img src="images/staria.png" alt="Hyundai Staria (11S)">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Hyundai Staria (11S)</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 11 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 650</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Hyundai Staria (11S)', 650)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="car-card reveal-on-scroll delay-3" data-category="mpv" hidden>
-        <div class="car-image-box">
-            <span class="car-tag-category">Large family car</span>
-            <img src="images/vellfire-8s.png" alt="Toyota Vellfire (8S)">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Toyota Vellfire (8S)</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 8 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 650</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Toyota Vellfire (8S)', 650)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="car-card reveal-on-scroll delay-1" data-category="mpv" hidden>
-        <div class="car-image-box">
-            <span class="car-tag-category">Large family car</span>
-            <img src="images/vellfire.png" alt="Toyota Vellfire (7S)">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Toyota Vellfire (7S)</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 7 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 850</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Toyota Vellfire (7S)', 850)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="car-card reveal-on-scroll delay-2" data-category="mpv" hidden>
-        <div class="car-image-box">
-            <span class="car-tag-category">Large family car</span>
-            <img src="images/alphard.png" alt="Toyota Alphard (7S)">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Toyota Alphard (7S)</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 7 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 950</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Toyota Alphard (7S)', 950)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- VAN -->
-    <div class="car-card reveal-on-scroll delay-3" data-category="van" hidden>
-        <div class="car-image-box">
-            <span class="car-tag-category">Van</span>
-            <img src="images/hiace.png" alt="Toyota Hiace (11S)">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Toyota Hiace (11S)</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 11 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Automatic / manual</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 350</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Toyota Hiace (11S)', 350)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="car-card reveal-on-scroll delay-1" data-category="van" hidden>
-        <div class="car-image-box">
-            <span class="car-tag-category">Van</span>
-            <img src="images/urvan.png" alt="Nissan Urvan (14S)">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Nissan Urvan (14S)</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 14 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Manual</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 450</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Nissan Urvan (14S)', 450)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="car-card reveal-on-scroll delay-2" data-category="van" hidden>
-        <div class="car-image-box">
-            <span class="car-tag-category">Tour van</span>
-            <img src="images/placer-x.png" alt="CAM Placer-X (18S)">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">CAM Placer-X (18S)</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 18 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Manual</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 550</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('CAM Placer-X (18S)', 550)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="car-card reveal-on-scroll delay-3" data-category="van" hidden>
-        <div class="car-image-box">
-            <span class="car-tag-category">Tour van</span>
-            <img src="images/joylong.png" alt="Joylong Komuter (18S)">
-        </div>
-        <div class="car-details">
-            <h3 class="car-name">Joylong Komuter (18S)</h3>
-            <div class="car-specs">
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span> 18 seats</span>
-                <span class="spec-item"><span class="icon-svg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span> Manual</span>
-            </div>
-            <div class="car-footer">
-                <div class="car-price-box">
-                    <span class="price-amount">RM 550</span>
-                    <span class="price-unit">/ day</span>
-                </div>
-                <button class="btn-select-car" onclick="selectCarForBooking('Joylong Komuter (18S)', 550)">Choose this car</button>
-            </div>
-        </div>
-    </div>
-
-</div>
+            <div class="cars-grid" id="fleetGrid"></div>
+            <p class="fleet-price-note">Prices shown are per day. Contact us for a quote on models without a listed rate.</p>
         </div>
     </section>
 
