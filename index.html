@@ -105,26 +105,56 @@
         <div class="compact-group compact-location">
             <label class="compact-label" for="pickupLocation">Pickup location</label>
             <input class="compact-input" id="pickupLocation" type="text" list="pickupLocations" placeholder="Search or enter a pickup location" autocomplete="off">
-            <datalist id="pickupLocations">
-                <option value="HQ Office Sungai Ara (Penang)"></option>
-                <option value="Penang International Airport (PEN) Level 2, Gate 5"></option>
-                <option value="Terminal Ferry Georgetown"></option>
-                <option value="Komtar George Town (Maybank Lobby)"></option>
-                <option value="Sungai Nibong Express Bus Terminal"></option>
-                <option value="Penang Sentral Level 3"></option>
-                <option value="KTM Butterworth Station (Main Entrance)"></option>
-                <option value="DoubleTree Resort by Hilton Penang"></option>
-                <option value="Shangri-La's Rasa Sayang Resort &amp; Spa"></option>
-                <option value="Hard Rock Hotel Penang"></option>
-                <option value="Lexis Suites Penang"></option>
-                <option value="Amari Spice (Setia Spice Convention Centre)"></option>
-                <option value="Eastern &amp; Oriental (Heritage Wing)"></option>
-            </datalist>
+<datalist id="pickupLocations">
+    <!-- FREE CHARGE / RADIUS 3KM & AIRPORT -->
+    <option value="HQ Office Sungai Ara (Lebuh Sungai Ara) - FREE Delivery"></option>
+    <option value="Penang International Airport (PEN) Level 2, Gate 5 - FREE Delivery"></option>
+    
+    <!-- BAYAN LEPAS AREA (RM20 - RM30) -->
+    <option value="Amari SPICE / Setia SPICE Convention Centre (Bayan Lepas) - Delivery RM20"></option>
+    <option value="Lexis Suites Penang (Bayan Lepas) - Delivery RM30"></option>
+
+    <!-- GELUGOR (RM40) -->
+    <option value="Universiti Sains Malaysia / USM (Gelugor) - Delivery RM40"></option>
+
+    <!-- BALIK PULAU (RM60) -->
+    <option value="Balik Pulau Town Centre - Delivery RM60"></option>
+
+    <!-- GEORGETOWN / FERRY (RM60) -->
+    <option value="Komtar George Town (Maybank Lobby) - Delivery RM60"></option>
+    <option value="Terminal Ferry Georgetown - Delivery RM60"></option>
+    <option value="Eastern &amp; Oriental Hotel (Heritage Wing Georgetown) - Delivery RM60"></option>
+
+    <!-- MAINLAND / KTM / BUS TERMINAL (RM60) -->
+    <option value="Sungai Nibong Express Bus Terminal - Delivery RM20"></option>
+    <option value="KTM Butterworth Station (Main Entrance) - Delivery RM60"></option>
+    <option value="Penang Sentral Level 3 (Butterworth) - Delivery RM60"></option>
+
+    <!-- BATU FERRINGHI AREA (RM80) -->
+    <option value="DoubleTree Resort by Hilton Penang (Batu Ferringhi) - Delivery RM80"></option>
+    <option value="Shangri-La's Rasa Sayang Resort &amp; Spa (Batu Ferringhi) - Delivery RM80"></option>
+    <option value="Hard Rock Hotel Penang (Batu Ferringhi) - Delivery RM80"></option>
+</datalist>
         </div>
 
         <div class="compact-group compact-location">
             <label class="compact-label" for="returnLocation">Return location</label>
-            <input class="compact-input" id="returnLocation" type="text" list="pickupLocations" placeholder="Search or enter a return location" autocomplete="off">
+            <input class="compact-input" id="returnLocation" type="text" list="returnLocations" placeholder="Search or enter a return location" autocomplete="off">
+            <datalist id="returnLocations">
+    <option value="HQ Office Sungai Ara (Lebuh Sungai Ara) - FREE Return"></option>
+    <option value="Penang International Airport (PEN) Level 2, Gate 5"></option>
+    <option value="Terminal Ferry Georgetown"></option>
+    <option value="Komtar George Town (Maybank Lobby)"></option>
+    <option value="Sungai Nibong Express Bus Terminal"></option>
+    <option value="Penang Sentral Level 3"></option>
+    <option value="KTM Butterworth Station (Main Entrance)"></option>
+    <option value="DoubleTree Resort by Hilton Penang"></option>
+    <option value="Shangri-La's Rasa Sayang Resort &amp; Spa"></option>
+    <option value="Hard Rock Hotel Penang"></option>
+    <option value="Lexis Suites Penang"></option>
+    <option value="Amari Spice (Setia Spice Convention Centre)"></option>
+    <option value="Eastern &amp; Oriental (Heritage Wing)"></option>
+</datalist>
         </div>
 
         <div class="compact-group compact-car-select">

@@ -223,7 +223,6 @@ function getSelectedCar() {
     return { carField, carName, carCard, dailyRate };
 }
 
-// Calculation Logic
 function updateCalculation() {
     const { carField, carCard, dailyRate } = getSelectedCar();
 
@@ -247,10 +246,43 @@ function updateCalculation() {
         diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     }
 
-    const totalCost = dailyRate * diffDays;
+    // 1. Kira kos sewaan kereta asas mengikut hari
+    const carRentalCost = dailyRate * diffDays;
 
-    // Update harga terus pada butang
-    document.getElementById('sumTotalPrice').innerText = `RM ${totalCost}`;
+    // 2. Dapatkan caj penghantaran berdasarkan teks lokasi pickup
+    const pickupLocationText = document.getElementById('pickupLocation').value.toLowerCase();
+    let deliveryFee = 0;
+
+    if (pickupLocationText.includes('batu ferringhi')) {
+        deliveryFee = 80;
+    } else if (pickupLocationText.includes('balik pulau') || pickupLocationText.includes('georgetown') || pickupLocationText.includes('butterworth') || pickupLocationText.includes('sentral') || pickupLocationText.includes('ferry')) {
+        deliveryFee = 60;
+    } else if (pickupLocationText.includes('gelugor')) {
+        deliveryFee = 40;
+    } else if (pickupLocationText.includes('lexis suites')) {
+        deliveryFee = 30;
+    } else if (pickupLocationText.includes('spice') || pickupLocationText.includes('bayan lepas')) {
+        deliveryFee = 20;
+    }
+
+    // 3. Kira jumlah keseluruhan
+    const grandTotal = carRentalCost + deliveryFee;
+
+    // 4. Formatting paparan harga (Harga utama besar, nota delivery kecil di bawah)
+    let priceMainText = `RM ${grandTotal}`;
+    let priceSubText = '';
+
+    if (deliveryFee > 0) {
+        priceMainText = `RM ${grandTotal}`;
+        priceSubText = `(RM ${carRentalCost} + RM ${deliveryFee} delivery)`;
+    }
+
+  // Update paparan hari dan jumlah harga pada skrin (sebaris / sebelah-sebelah)
+    document.getElementById('sumDays').innerText = `${diffDays} day(s)`;
+    document.getElementById('sumTotalPrice').innerHTML = `
+        <span>${priceMainText}</span> 
+        ${priceSubText ? `<span style="font-size: 0.8rem; color: var(--text-secondary, #9ca3af); font-weight: normal; margin-left: 6px;">${priceSubText}</span>` : ''}
+    `;
 }
 
 // WhatsApp Booking Trigger

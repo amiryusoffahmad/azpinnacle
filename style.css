@@ -802,6 +802,11 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
         min-height: 0;
         border-right: 0;
         border-bottom: 1px solid var(--border-color);
+        mix-blend-mode: multiply; /* Membuang latar belakang putih jika mod cerah, tapi kalau dark mode boleh guna drop-shadow atau invert */
+        background-color: transparent;
+    object-fit: contain;
+    /* Tambah sedikit kesan seragam jika gambar ada latar putih */
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
     }
     .car-image-box img { position: absolute; inset: 0; }
     .car-tag-category { top: 8px; left: 7px; padding: 4px 7px; font-size: 0.62rem; }
@@ -852,4 +857,10 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
     .car-specs { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 10px; }
     .car-footer { gap: 6px; }
     .btn-select-car { padding: 6px 7px; font-size: 0.66rem; }
+}
+
+.total-price-text strong {
+    font-size: 1.3rem; /* Laraskan saiz ikut selera */
+    color: var(--accent-red, #9f1239);
+    display: inline-block;
 }
