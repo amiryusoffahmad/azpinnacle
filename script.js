@@ -105,16 +105,16 @@ const fleetVehicles = [
     { name: 'Perodua Alza 1st Gen', category: 'mpv', fuel: 'Petrol', transmission: 'Auto', capacity: '7 pax', engine: '1.5L', image: 'images/alza.png', rate: 170 },
     { name: 'Perodua Alza 3rd Gen', category: 'mpv', fuel: 'Petrol', transmission: 'Auto', capacity: '7 pax', engine: '1.5L', image: 'images/alza3.png', rate: 230 },
     { name: 'Toyota Innova 1st Gen', category: 'mpv', fuel: 'Petrol', transmission: 'Auto', capacity: '8 pax', engine: '2.0L', image: 'images/innova.png', rate: 250 },
-    { name: 'Toyota Innova Crysta 2nd Gen', category: 'mpv', fuel: 'Petrol', transmission: 'Auto', capacity: '8 pax', engine: '2.0L', image: 'images/innova3.png', rate: 290 },
-    { name: 'Perodua Aruz', category: 'mpv', fuel: 'Petrol', transmission: 'Auto', capacity: '8 pax', engine: '2.0L', image: 'images/aruz.png', rate: 250 },
+    { name: 'Toyota Innova Crysta 2nd Gen', category: 'mpv', fuel: 'Petrol', transmission: 'Auto', capacity: '8 pax', engine: '2.0L', image: 'images/innova3.png', rate: 300 },
+    { name: 'Perodua Aruz', category: 'mpv', fuel: 'Petrol', transmission: 'Auto', capacity: '8 pax', engine: '2.0L', image: 'images/aruz.png', rate: 230 },
     { name: 'Proton X70', category: 'suv', fuel: 'Petrol', transmission: 'Auto', capacity: '5 pax', engine: '1.8L Turbo', image: 'images/x70.png', rate: 350 },
     { name: 'Proton X50', category: 'suv', fuel: 'Petrol', transmission: 'Auto', capacity: '5 pax', engine: '1.5L Turbo', image: 'images/x50.png', rate: 350 },
     { name: 'Hyundai Starex', category: 'luxury-mpv', fuel: 'Diesel', transmission: 'Auto', capacity: '12 pax', engine: '2.5L Turbo', image: 'images/starex.png', rate: 480 },
     { name: 'Hyundai Staria', category: 'luxury-mpv', fuel: 'Diesel', transmission: 'Auto', capacity: '11 pax', engine: '2.2L Turbo', image: 'images/staria.png', rate: 650 },
     { name: 'Toyota Alphard SC', category: 'luxury-mpv', fuel: 'Petrol', transmission: 'Auto', capacity: '7 pax', engine: '2.5L', image: 'images/alphard.png', rate: 750 },
-    { name: 'Toyota Hiace', category: 'van', fuel: 'Diesel', transmission: 'Manual', capacity: '11 pax', engine: '—', image: 'images/hiace.png', rate: 350 },
-    { name: 'Nissan Urvan', category: 'van', fuel: 'Diesel', transmission: 'Manual', capacity: '15 pax', engine: '—', image: 'images/urvan.png', rate: 450 },
-    { name: 'CAM Placer-X', category: 'van', fuel: 'Diesel', transmission: 'Manual', capacity: '18 pax', engine: '—', image: 'images/camplacerx.png', rate: 550 }
+    { name: 'Toyota Hiace', category: 'van', fuel: 'Diesel', transmission: 'Manual', capacity: '11 pax', engine: '2.5cc', image: 'images/hiace.png', rate: 350 },
+    { name: 'Nissan Urvan', category: 'van', fuel: 'Diesel', transmission: 'Manual', capacity: '15 pax', engine: '2.5cc turbo', image: 'images/urvan.png', rate: 450 },
+    { name: 'CAM Placer-X', category: 'van', fuel: 'Diesel', transmission: 'Manual', capacity: '18 pax', engine: '3.0cc', image: 'images/camplacerx.png', rate: 550 }
 ];
 
 const categoryLabels = {
@@ -223,6 +223,45 @@ function getSelectedCar() {
     return { carField, carName, carCard, dailyRate };
 }
 
+// Rate per jam mengikut kategori/model kereta
+const hourlyRates = {
+    'viva': 8,
+    'axia 2nd gen': 10,
+    'axia 3rd gen': 12,
+    'myvi 2nd gen': 12,
+    'bezza': 15,
+    'saga': 15,
+    'persona': 15,
+    'myvi gen3': 15,
+    'myvi 3rd gen': 15,
+    'alza 1st gen': 15,
+    'vios': 20,
+    'city': 20,
+    'alza 3rd gen': 20,
+    'aruz': 20,
+    'innova 1st gen': 20,
+    'innova 2nd gen': 30,
+    'x70': 30,
+    'x50': 30,
+    'starex': 45,
+    'hiace': 45,
+    'urvan': 45,
+    'placer': 45,
+    'staria': 70,
+    'alphard': 90
+};
+
+// Fungsi bantuan untuk dapatkan rate per jam berdasarkan nama kereta
+function getHourlyRate(carName) {
+    const nameLower = carName.toLowerCase();
+    for (const [key, rate] of Object.entries(hourlyRates)) {
+        if (nameLower.includes(key)) {
+            return rate;
+        }
+    }
+    return 0; // Default jika tiada match
+}
+
 function updateCalculation() {
     const { carField, carCard, dailyRate } = getSelectedCar();
 
@@ -237,19 +276,50 @@ function updateCalculation() {
         return;
     }
 
-    const pickDateVal = new Date(document.getElementById('pickDate').value);
-    const returnDateVal = new Date(document.getElementById('returnDate').value);
+    // Dapatkan Tarikh & Masa Pickup & Return
+    const pickDateVal = document.getElementById('pickDate').value;
+    const pickTimeVal = document.getElementById('pickTime').value || "10:00";
+    const returnDateVal = document.getElementById('returnDate').value;
+    const returnTimeVal = document.getElementById('returnTime').value || "10:00";
 
-    let diffDays = 1;
-    if (returnDateVal > pickDateVal) {
-        const diffTime = Math.abs(returnDateVal - pickDateVal);
-        diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    if (!pickDateVal || !returnDateVal) return;
+
+    const pickDateTime = new Date(`${pickDateVal}T${pickTimeVal}`);
+    const returnDateTime = new Date(`${returnDateVal}T${returnTimeVal}`);
+
+    // Kira jumlah jam (total hours)
+    let totalHours = 0;
+    if (returnDateTime > pickDateTime) {
+        const diffMs = returnDateTime - pickDateTime;
+        totalHours = Math.ceil(diffMs / (1000 * 60 * 60)); // Buka baki minit ke jam terdekat
+    } else {
+        totalHours = 24; // Default minimum 1 hari (24 jam) jika tarikh tidak sah
     }
 
-    // 1. Kira kos sewaan kereta asas mengikut hari
-    const carRentalCost = dailyRate * diffDays;
+    // 1. Kira Bilangan Hari & Jam Lebihan mengikut Syarat Client
+    let baseDays = Math.floor(totalHours / 24);
+    let extraHours = totalHours % 24;
 
-    // 2. Dapatkan caj penghantaran berdasarkan teks lokasi pickup
+    // SYARAT CLIENT: Jika lebihan jam >= 10 jam, kira terus sebagai 1 HARI TAMBAHAN
+    if (extraHours >= 10) {
+        baseDays += 1;
+        extraHours = 0;
+    }
+
+    // Kebalikan jika totalHours kurang dari 24 jam tapi melebihi 0 (minimum 1 hari)
+    if (baseDays === 0) {
+        baseDays = 1;
+        extraHours = 0;
+    }
+
+    // 2. Dapatkan Kadar Per Jam Kereta
+    const carName = document.getElementById('mainCarSelect').value;
+    const hourlyRate = getHourlyRate(carName);
+
+    // 3. Kira Kos Sewaan Kereta (Hari + Jam Lebihan)
+    const carRentalCost = (baseDays * dailyRate) + (extraHours * hourlyRate);
+
+    // 4. Dapatkan caj penghantaran (Delivery Fee)
     const pickupLocationText = document.getElementById('pickupLocation').value.toLowerCase();
     let deliveryFee = 0;
 
@@ -265,23 +335,48 @@ function updateCalculation() {
         deliveryFee = 20;
     }
 
-    // 3. Kira jumlah keseluruhan
-    const grandTotal = carRentalCost + deliveryFee;
+    // 5. Kira Add-ons
+    let addOnsTotal = 0;
+    const addonInputs = document.querySelectorAll('.addon-qty');
+    addonInputs.forEach(input => {
+        const price = parseInt(input.getAttribute('data-price')) || 0;
+        const qty = parseInt(input.value) || 0;
+        if (qty > 0) {
+            addOnsTotal += (price * qty);
+        }
+    });
 
-    // 4. Formatting paparan harga (Harga utama besar, nota delivery kecil di bawah)
-    let priceMainText = `RM ${grandTotal}`;
-    let priceSubText = '';
+    // 6. Jumlah Keseluruhan
+    const grandTotal = carRentalCost + deliveryFee + addOnsTotal;
 
-    if (deliveryFee > 0) {
-        priceMainText = `RM ${grandTotal}`;
-        priceSubText = `(RM ${carRentalCost} + RM ${deliveryFee} delivery)`;
+    // 7. Text Paparan Tempoh Hari & Jam
+    let durationText = `${baseDays} day(s)`;
+    if (extraHours > 0) {
+        durationText += ` + ${extraHours} hr(s)`;
     }
 
-  // Update paparan hari dan jumlah harga pada skrin (sebaris / sebelah-sebelah)
-    document.getElementById('sumDays').innerText = `${diffDays} day(s)`;
+    // 8. Formatting Pecahan Harga (Side-by-side)
+    let priceMainText = `RM ${grandTotal}`;
+    let breakdownParts = [`RM ${carRentalCost}`];
+
+    if (deliveryFee > 0) {
+        breakdownParts.push(`RM ${deliveryFee} delivery`);
+    }
+    if (addOnsTotal > 0) {
+        breakdownParts.push(`RM ${addOnsTotal} addons`);
+    }
+
+    let priceSubText = breakdownParts.length > 1 ? `(${breakdownParts.join(' + ')})` : '';
+
+  // Update paparan hari dan jumlah harga pada skrin dengan lebih kemas
+    document.getElementById('sumDays').innerText = durationText;
     document.getElementById('sumTotalPrice').innerHTML = `
-        <span>${priceMainText}</span> 
-        ${priceSubText ? `<span style="font-size: 0.8rem; color: var(--text-secondary, #9ca3af); font-weight: normal; margin-left: 6px;">${priceSubText}</span>` : ''}
+        <div style="display: flex; flex-direction: column; gap: 2px;">
+            <div style="display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;">
+                <span style="font-size: 1.3rem; font-weight: 700; color: var(--accent-red, #ef4444);">${priceMainText}</span>
+                ${priceSubText ? `<span style="font-size: 0.78rem; color: var(--text-secondary, #9ca3af); font-weight: normal;">${priceSubText}</span>` : ''}
+            </div>
+        </div>
     `;
 }
 
@@ -296,34 +391,105 @@ function sendBookingToWhatsApp() {
 
     const driverLabel = document.getElementById('driverOption').checked ? 'With a driver' : 'Drive myself';
 
-    const pickDate = document.getElementById('pickDate').value;
-    const pickTime = document.getElementById('pickTime').value;
-    const returnDate = document.getElementById('returnDate').value;
-    const returnTime = document.getElementById('returnTime').value;
+    const pickDateVal = document.getElementById('pickDate').value;
+    const pickTimeVal = document.getElementById('pickTime').value || "10:00";
+    const returnDateVal = document.getElementById('returnDate').value;
+    const returnTimeVal = document.getElementById('returnTime').value || "10:00";
 
     const pickupLocation = document.getElementById('pickupLocation').value.trim() || 'Not selected';
     const returnLocation = document.getElementById('returnLocation').value.trim() || 'Not selected';
 
-    const pickDateObj = new Date(pickDate);
-    const returnDateObj = new Date(returnDate);
-    let diffDays = 1;
-    if (returnDateObj > pickDateObj) {
-        const diffTime = Math.abs(returnDateObj - pickDateObj);
-        diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    if (!pickDateVal || !returnDateVal) {
+        alert('Please select pick-up and return dates.');
+        return;
     }
-    const estimatedTotal = dailyRate === null
-        ? 'To be confirmed'
-        : `RM ${dailyRate * diffDays}`;
 
+    const pickDateTime = new Date(`${pickDateVal}T${pickTimeVal}`);
+    const returnDateTime = new Date(`${returnDateVal}T${returnTimeVal}`);
+
+    // 1. Kira jumlah jam & hari mengikut syarat jam lebihan
+    let totalHours = 0;
+    if (returnDateTime > pickDateTime) {
+        const diffMs = returnDateTime - pickDateTime;
+        totalHours = Math.ceil(diffMs / (1000 * 60 * 60));
+    } else {
+        totalHours = 24;
+    }
+
+    let baseDays = Math.floor(totalHours / 24);
+    let extraHours = totalHours % 24;
+
+    if (extraHours >= 10) {
+        baseDays += 1;
+        extraHours = 0;
+    }
+    if (baseDays === 0) {
+        baseDays = 1;
+        extraHours = 0;
+    }
+
+    // 2. Kira kos kereta (Hari + Jam lebihan)
+    const hourlyRate = getHourlyRate(carName);
+    const carRentalCost = dailyRate !== null ? (baseDays * dailyRate) + (extraHours * hourlyRate) : 0;
+
+    // 3. Kira Delivery Fee
+    const pickupLocationText = pickupLocation.toLowerCase();
+    let deliveryFee = 0;
+    if (pickupLocationText.includes('batu ferringhi')) {
+        deliveryFee = 80;
+    } else if (pickupLocationText.includes('balik pulau') || pickupLocationText.includes('georgetown') || pickupLocationText.includes('butterworth') || pickupLocationText.includes('sentral') || pickupLocationText.includes('ferry')) {
+        deliveryFee = 60;
+    } else if (pickupLocationText.includes('gelugor')) {
+        deliveryFee = 40;
+    } else if (pickupLocationText.includes('lexis suites')) {
+        deliveryFee = 30;
+    } else if (pickupLocationText.includes('spice') || pickupLocationText.includes('bayan lepas')) {
+        deliveryFee = 20;
+    }
+
+    // 4. Kira Add-ons & Senarai untuk mesej WhatsApp
+    let addOnsTotal = 0;
+    let addOnsDetails = [];
+    const addonInputs = document.querySelectorAll('.addon-qty');
+    addonInputs.forEach(input => {
+        const price = parseInt(input.getAttribute('data-price')) || 0;
+        const qty = parseInt(input.value) || 0;
+        if (qty > 0) {
+            const addonName = input.closest('.addon-row').querySelector('div > div').innerText;
+            addOnsTotal += (price * qty);
+            addOnsDetails.push(`- ${addonName} x${qty} (RM ${price * qty})`);
+        }
+    });
+
+    // 5. Grand Total
+    const grandTotal = dailyRate !== null ? carRentalCost + deliveryFee + addOnsTotal : null;
+
+    // 6. Format Teks Tempoh
+    let durationText = `${baseDays} day(s)`;
+    if (extraHours > 0) {
+        durationText += ` + ${extraHours} hr(s)`;
+    }
+
+    // 7. Format Estimasi Harga untuk Mesej
+    let estimatedTotal = 'To be confirmed';
+    if (grandTotal !== null) {
+        let breakdown = [`RM ${carRentalCost} car`];
+        if (deliveryFee > 0) breakdown.push(`RM ${deliveryFee} delivery`);
+        if (addOnsTotal > 0) breakdown.push(`RM ${addOnsTotal} addons`);
+        estimatedTotal = `RM ${grandTotal} (${breakdown.join(' + ')})`;
+    }
+
+    // 8. Bina Mesej WhatsApp (Guna Bullet Point Biasa)
     const textMsg = `Hello AZ Pinnacle Auto (Penang Car Rental),\n` +
                     `I would like to check if a car is available:\n\n` +
-                    `🚗 Car model: ${carName}\n` +
-                    `🛞 Driving option: ${driverLabel}\n` +
-                    `📍 Pickup location: ${pickupLocation}\n` +
-                    `📍 Return location: ${returnLocation}\n` +
-                    `📅 Pick-up: ${pickDate} at ${pickTime}\n` +
-                    `📅 Return: ${returnDate} at ${returnTime} (${diffDays} days)\n` +
-                    `💰 Estimated total: ${estimatedTotal}\n\n` +
+                    `- Car model: ${carName}\n` +
+                    `- Driving option: ${driverLabel}\n` +
+                    `- Pickup location: ${pickupLocation}\n` +
+                    `- Return location: ${returnLocation}\n` +
+                    `- Pick-up: ${pickDateVal} at ${pickTimeVal}\n` +
+                    `- Return: ${returnDateVal} at ${returnTimeVal} (${durationText})\n` +
+                    (addOnsDetails.length > 0 ? `- Add-ons:\n${addOnsDetails.join('\n')}\n` : '') +
+                    `- Estimated total: ${estimatedTotal}\n\n` +
                     `Is this car available on these dates? Thank you!`;
 
     const waPhone = "60177644262";

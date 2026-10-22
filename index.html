@@ -81,7 +81,7 @@
         <button class="nav-menu-backdrop" id="navMenuBackdrop" type="button" aria-label="Close navigation menu" tabindex="-1"></button>
     </nav>
 
-    <!-- HERO SECTION WITH INTEGRATED SEARCH BOX -->
+<!-- HERO SECTION WITH INTEGRATED SEARCH BOX -->
     <section class="hero" id="hero">
         <div class="container">
             <div class="hero-content">
@@ -167,8 +167,57 @@
                         </div>
                     </div>
 
+                    <!-- ========================================= -->
+                    <!-- TAMBAHAN: ACCORDION UNTUK ADDITIONAL SERVICES -->
+                    <!-- ========================================= -->
+<div class="search-addons-section" style="border-top: 1px solid var(--border-color, #27272a); margin-top: 15px; padding-top: 15px;">
+        <details class="addons-accordion" style="cursor: pointer;">
+            <summary style="font-size: 0.7rem; font-weight: 500; color: var(--accent-red, #9f1239); outline: none; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                <span>+ Add Additional Services (Optional)</span>
+            </summary>
+            
+            <div class="addons-list-container" style="margin-top: 12px; display: flex; flex-direction: column; gap: 10px;">
+                <!-- Addon Item 1: Child Seat -->
+                <div class="addon-row" style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); padding: 10px 12px; border-radius: 8px;">
+                    <div style="text-align: left; flex: 1;">
+                        <div style="font-size: 0.7rem; font-weight: 600;">Child Car Seat (Per Day)</div>
+                        <div style="font-size: 0.6rem; color: var(--text-secondary, #9ca3af);">Suitable for age 1–4y (max 15kg)</div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+                        <span style="font-size: 0.7rem; font-weight: 600;">RM 15</span>
+                        <input type="number" class="compact-input addon-qty" data-price="15" min="0" value="0" style="width: 50px; text-align: center; padding: 4px;" oninput="updateCalculation()">
+                    </div>
+                </div>
+
+                <!-- Addon Item 2: Excess Protection / Extra Driver -->
+                <div class="addon-row" style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); padding: 10px 12px; border-radius: 8px;">
+                    <div style="text-align: left; flex: 1;">
+                        <div style="font-size: 0.7rem; font-weight: 600;">Additional Driver (Per Rental)</div>
+                        <div style="font-size: 0.6rem; color: var(--text-secondary, #9ca3af);">Authorized second driver registration</div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+                        <span style="font-size: 0.7rem; font-weight: 600;">RM 20</span>
+                        <input type="number" class="compact-input addon-qty" data-price="20" min="0" value="0" style="width: 50px; text-align: center; padding: 4px;" oninput="updateCalculation()">
+                    </div>
+                </div>
+
+                <!-- Addon Item 3: TNG -->
+                <div class="addon-row" style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); padding: 10px 12px; border-radius: 8px;">
+                    <div style="text-align: left; flex: 1;">
+                        <div style="font-size: 0.7rem; font-weight: 600;">Touch N Go Card</div>
+                        <div style="font-size: 0.6rem; color: var(--text-secondary, #9ca3af);">Purchase TNG card it will be your permanently.</div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+                        <span style="font-size: 0.7rem; font-weight: 600;">RM 18</span>
+                        <input type="number" class="compact-input addon-qty" data-price="18" min="0" value="0" style="width: 50px; text-align: center; padding: 4px;" oninput="updateCalculation()">
+                    </div>
+                </div>
+            </div>
+        </details>
+    </div>
+
                     <!-- Total and WhatsApp button -->
-                    <div class="search-bottom-bar">
+                    <div class="search-bottom-bar" style="margin-top: 15px;">
                         <div class="total-price-text">
                             <span>Estimated price (<span id="sumDays">1 day</span>):</span>
                             <strong id="sumTotalPrice">RM 100</strong>
