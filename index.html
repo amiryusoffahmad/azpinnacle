@@ -95,111 +95,105 @@
                 </div>
                 
                 <p class="hero-desc">
-    Looking for reliable <strong>car rental penang</strong> or <strong>kereta sewa penang</strong>? Choose your dates and car below for instant WhatsApp booking. Free delivery to Penang Airport!
-</p>
+                    Looking for reliable <strong>car rental penang</strong> or <strong>kereta sewa penang</strong>? Choose your dates and car below for instant WhatsApp booking. Free delivery to Penang Airport!
+                </p>
 
-<!-- HERO SEARCH WIDGET WITH BOTTOM TOTAL BAR -->
-<div class="hero-search-box compact-search" id="booking">
-    <!-- Search fields -->
-    <div class="compact-form-row">
-        <div class="compact-group compact-location">
-            <label class="compact-label" for="pickupLocation">Pickup location</label>
-            <input class="compact-input" id="pickupLocation" type="text" list="pickupLocations" placeholder="Search or enter a pickup location" autocomplete="off">
-<datalist id="pickupLocations">
-    <!-- FREE CHARGE / RADIUS 3KM & AIRPORT -->
-    <option value="HQ Office Sungai Ara (Lebuh Sungai Ara) - FREE Delivery"></option>
-    <option value="Penang International Airport (PEN) Level 2, Gate 5 - FREE Delivery"></option>
-    
-    <!-- BAYAN LEPAS AREA (RM20 - RM30) -->
-    <option value="Amari SPICE / Setia SPICE Convention Centre (Bayan Lepas) - Delivery RM20"></option>
-    <option value="Lexis Suites Penang (Bayan Lepas) - Delivery RM30"></option>
+                <!-- HERO SEARCH WIDGET WITH BOTTOM TOTAL BAR -->
+                <div class="hero-search-box compact-search" id="booking">
+                    <!-- Search fields -->
+                    <div class="compact-form-row">
+                        <div class="compact-group compact-location">
+                            <label class="compact-label" for="pickupLocation">Pickup location</label>
+                            <input class="compact-input" id="pickupLocation" type="text" list="pickupLocations" placeholder="Search or enter a pickup location" autocomplete="off" oninput="updateCalculation()">
+                            <datalist id="pickupLocations">
+                                <option value="HQ Office Sungai Ara (Lebuh Sungai Ara) - FREE Delivery"></option>
+                                <option value="Penang International Airport (PEN) Level 2, Gate 5 - FREE Delivery"></option>
+                                <option value="Amari SPICE / Setia SPICE Convention Centre (Bayan Lepas) - Delivery RM20"></option>
+                                <option value="Lexis Suites Penang (Bayan Lepas) - Delivery RM30"></option>
+                                <option value="Universiti Sains Malaysia / USM (Gelugor) - Delivery RM40"></option>
+                                <option value="Balik Pulau Town Centre - Delivery RM60"></option>
+                                <option value="Komtar George Town (Maybank Lobby) - Delivery RM60"></option>
+                                <option value="Terminal Ferry Georgetown - Delivery RM60"></option>
+                                <option value="Eastern &amp; Oriental Hotel (Heritage Wing Georgetown) - Delivery RM60"></option>
+                                <option value="Sungai Nibong Express Bus Terminal - Delivery RM20"></option>
+                                <option value="KTM Butterworth Station (Main Entrance) - Delivery RM60"></option>
+                                <option value="Penang Sentral Level 3 (Butterworth) - Delivery RM60"></option>
+                                <option value="DoubleTree Resort by Hilton Penang (Batu Ferringhi) - Delivery RM80"></option>
+                                <option value="Shangri-La's Rasa Sayang Resort &amp; Spa (Batu Ferringhi) - Delivery RM80"></option>
+                                <option value="Hard Rock Hotel Penang (Batu Ferringhi) - Delivery RM80"></option>
+                            </datalist>
+                        </div>
 
-    <!-- GELUGOR (RM40) -->
-    <option value="Universiti Sains Malaysia / USM (Gelugor) - Delivery RM40"></option>
+                        <div class="compact-group compact-location">
+                            <label class="compact-label" for="returnLocation">Return location</label>
+                            <input class="compact-input" id="returnLocation" type="text" list="returnLocations" placeholder="Search or enter a return location" autocomplete="off">
+                            <datalist id="returnLocations">
+                                <option value="HQ Office Sungai Ara (Lebuh Sungai Ara) - FREE Return"></option>
+                                <option value="Penang International Airport (PEN) Level 2, Gate 5"></option>
+                                <option value="Terminal Ferry Georgetown"></option>
+                                <option value="Komtar George Town (Maybank Lobby)"></option>
+                                <option value="Sungai Nibong Express Bus Terminal"></option>
+                                <option value="Penang Sentral Level 3"></option>
+                                <option value="KTM Butterworth Station (Main Entrance)"></option>
+                                <option value="DoubleTree Resort by Hilton Penang"></option>
+                                <option value="Shangri-La's Rasa Sayang Resort &amp; Spa"></option>
+                                <option value="Hard Rock Hotel Penang"></option>
+                                <option value="Lexis Suites Penang"></option>
+                                <option value="Amari Spice (Setia Spice Convention Centre)"></option>
+                                <option value="Eastern &amp; Oriental (Heritage Wing)"></option>
+                            </datalist>
+                        </div>
 
-    <!-- BALIK PULAU (RM60) -->
-    <option value="Balik Pulau Town Centre - Delivery RM60"></option>
+                        <div class="compact-group compact-car-select">
+                            <label class="compact-label" for="mainCarSelect">Car</label>
+                            <input class="compact-input" id="mainCarSelect" type="text" list="availableCars" value="" placeholder="Search for a car" autocomplete="off" oninput="updateCalculation()">
+                            <datalist id="availableCars"></datalist>
+                        </div>
 
-    <!-- GEORGETOWN / FERRY (RM60) -->
-    <option value="Komtar George Town (Maybank Lobby) - Delivery RM60"></option>
-    <option value="Terminal Ferry Georgetown - Delivery RM60"></option>
-    <option value="Eastern &amp; Oriental Hotel (Heritage Wing Georgetown) - Delivery RM60"></option>
+                        <div class="compact-group compact-date-group">
+                            <label class="compact-label">Pickup date and time</label>
+                            <div class="compact-inline-inputs">
+                                <input type="date" class="compact-input" id="pickDate" onchange="updateCalculation()">
+                                <input type="time" class="compact-input time-pick" id="pickTime" value="10:00" onchange="updateCalculation()">
+                            </div>
+                        </div>
 
-    <!-- MAINLAND / KTM / BUS TERMINAL (RM60) -->
-    <option value="Sungai Nibong Express Bus Terminal - Delivery RM20"></option>
-    <option value="KTM Butterworth Station (Main Entrance) - Delivery RM60"></option>
-    <option value="Penang Sentral Level 3 (Butterworth) - Delivery RM60"></option>
+                        <div class="compact-group compact-date-group">
+                            <label class="compact-label">Drop-off date and time</label>
+                            <div class="compact-inline-inputs">
+                                <input type="date" class="compact-input" id="returnDate" onchange="updateCalculation()">
+                                <input type="time" class="compact-input time-pick" id="returnTime" value="10:00" onchange="updateCalculation()">
+                            </div>
+                        </div>
+                    </div>
 
-    <!-- BATU FERRINGHI AREA (RM80) -->
-    <option value="DoubleTree Resort by Hilton Penang (Batu Ferringhi) - Delivery RM80"></option>
-    <option value="Shangri-La's Rasa Sayang Resort &amp; Spa (Batu Ferringhi) - Delivery RM80"></option>
-    <option value="Hard Rock Hotel Penang (Batu Ferringhi) - Delivery RM80"></option>
-</datalist>
-        </div>
+                    <!-- Total and WhatsApp button -->
+                    <div class="search-bottom-bar">
+                        <div class="total-price-text">
+                            <span>Estimated price (<span id="sumDays">1 day</span>):</span>
+                            <strong id="sumTotalPrice">RM 100</strong>
+                        </div>
 
-        <div class="compact-group compact-location">
-            <label class="compact-label" for="returnLocation">Return location</label>
-            <input class="compact-input" id="returnLocation" type="text" list="returnLocations" placeholder="Search or enter a return location" autocomplete="off">
-            <datalist id="returnLocations">
-    <option value="HQ Office Sungai Ara (Lebuh Sungai Ara) - FREE Return"></option>
-    <option value="Penang International Airport (PEN) Level 2, Gate 5"></option>
-    <option value="Terminal Ferry Georgetown"></option>
-    <option value="Komtar George Town (Maybank Lobby)"></option>
-    <option value="Sungai Nibong Express Bus Terminal"></option>
-    <option value="Penang Sentral Level 3"></option>
-    <option value="KTM Butterworth Station (Main Entrance)"></option>
-    <option value="DoubleTree Resort by Hilton Penang"></option>
-    <option value="Shangri-La's Rasa Sayang Resort &amp; Spa"></option>
-    <option value="Hard Rock Hotel Penang"></option>
-    <option value="Lexis Suites Penang"></option>
-    <option value="Amari Spice (Setia Spice Convention Centre)"></option>
-    <option value="Eastern &amp; Oriental (Heritage Wing)"></option>
-</datalist>
-        </div>
+                        <label class="driver-checkbox" for="driverOption">
+                            <input type="checkbox" id="driverOption" value="driver">
+                            <span>Need driver?</span>
+                        </label>
 
-        <div class="compact-group compact-car-select">
-            <label class="compact-label" for="mainCarSelect">Car</label>
-            <input class="compact-input" id="mainCarSelect" type="text" list="availableCars" value="" placeholder="Search for a car" autocomplete="off" oninput="updateCalculation()">
-            <datalist id="availableCars"></datalist>
-        </div>
+                        <button class="btn-wa-action" onclick="sendBookingToWhatsApp()">
+                            <span class="icon-svg">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                            </span>
+                            Check availability on WhatsApp
+                        </button>
+                    </div>
 
-        <div class="compact-group compact-date-group">
-            <label class="compact-label">Pickup date and time</label>
-            <div class="compact-inline-inputs">
-                <input type="date" class="compact-input" id="pickDate" onchange="updateCalculation()">
-                <input type="time" class="compact-input time-pick" id="pickTime" value="10:00" onchange="updateCalculation()">
-            </div>
-        </div>
-
-        <div class="compact-group compact-date-group">
-            <label class="compact-label">Drop-off date and time</label>
-            <div class="compact-inline-inputs">
-                <input type="date" class="compact-input" id="returnDate" onchange="updateCalculation()">
-                <input type="time" class="compact-input time-pick" id="returnTime" value="10:00" onchange="updateCalculation()">
-            </div>
-        </div>
-    </div>
-
-    <!-- Total and WhatsApp button -->
-    <div class="search-bottom-bar">
-        <div class="total-price-text">
-            <span>Estimated price (<span id="sumDays">1 day</span>):</span>
-            <strong id="sumTotalPrice">RM 100</strong>
-        </div>
-
-        <label class="driver-checkbox" for="driverOption">
-            <input type="checkbox" id="driverOption" value="driver">
-            <span>Need driver?</span>
-        </label>
-
-        <button class="btn-wa-action" onclick="sendBookingToWhatsApp()">
-            <span class="icon-svg">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-            </span>
-            Check availability on WhatsApp
-        </button>
-    </div>
-</div>
+                    <!-- 1. PAUTAAN T&C DI BAWAH BUTTON -->
+                    <div style="text-align: center; margin-top: 10px;">
+                        <a href="#" onclick="openTncModal(event)" style="font-size: 0.8rem; color: var(--text-secondary, #9ca3af); text-decoration: underline;">
+                            Rental Terms &amp; Conditions (T&amp;C)
+                        </a>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -239,7 +233,7 @@
 
             <div class="feature-item reveal-on-scroll delay-4">
                 <div class="feature-icon-box">
-                    <span class="icon-svg"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                    <span class="icon-svg"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
                 </div>
                 <div class="feature-text">
                     <h4>Driver available</h4>
@@ -252,10 +246,10 @@
     <section class="section-padding" id="fleet">
         <div class="container">
             <div class="section-header reveal-on-scroll">
-    <span class="section-subtitle">Penang Car Rental Fleet</span>
-    <h2 class="section-title">Our Cars & Rates</h2>
-    <p class="section-desc">Browse our <strong>car rental penang</strong> fleet by category (Hatchback, Sedan, SUV, MPV, Luxury Alphard & Van). Compare fuel, transmission, passenger capacity, and best daily rates.</p>
-</div>
+                <span class="section-subtitle">Penang Car Rental Fleet</span>
+                <h2 class="section-title">Our Cars & Rates</h2>
+                <p class="section-desc">Browse our <strong>car rental penang</strong> fleet by category (Hatchback, Sedan, SUV, MPV, Luxury Alphard & Van). Compare fuel, transmission, passenger capacity, and best daily rates.</p>
+            </div>
 
             <div class="filter-tabs reveal-on-scroll">
                 <button class="filter-btn active" onclick="filterFleet('all', this)">All cars</button>
@@ -451,6 +445,8 @@
                     <li><a href="#hero">Home</a></li>
                     <li><a href="#fleet">Our cars</a></li>
                     <li><a href="#reviews">Customer reviews</a></li>
+                    <!-- 3. PAUTAAN T&C DALAM FOOTER -->
+                    <li><a href="#" onclick="openTncModal(event)">Terms &amp; Conditions</a></li>
                 </ul>
             </div>
 
@@ -475,6 +471,23 @@
             <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
         </span>
     </a>
+
+<!-- MODAL POPUP T&C GUNA GAMBAR POSTER -->
+<div class="tnc-modal-overlay" id="tncModal" style="display: none;">
+    <div class="tnc-modal-content" style="max-width: 650px;">
+        <div class="tnc-modal-header">
+            <h3>Car Rental Terms &amp; Conditions</h3>
+            <button class="tnc-close-btn" onclick="closeTncModal()">&times;</button>
+        </div>
+        <div class="tnc-modal-body" style="padding: 10px; text-align: center;">
+            <!-- Simpan gambar poster ni dalam folder images/tnc-poster.jpg -->
+            <img src="images/tnc.jpeg" alt="AZ Pinnacle Auto Terms & Conditions" style="width: 100%; height: auto; border-radius: 8px;">
+        </div>
+        <div class="tnc-modal-footer">
+            <button type="button" class="btn-wa-action" style="padding: 8px 16px; font-size: 0.9rem;" onclick="closeTncModal()">Close</button>
+        </div>
+    </div>
+</div>
 
     <script src="script.js"></script>
 </body>

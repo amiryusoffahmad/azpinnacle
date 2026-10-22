@@ -347,3 +347,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     revealElements.forEach(el => scrollObserver.observe(el));
 });
+
+function openTncModal(e) {
+    if(e) e.preventDefault();
+    document.getElementById('tncModal').style.display = 'flex';
+}
+
+function closeTncModal() {
+    document.getElementById('tncModal').style.display = 'none';
+}
+
+// Tutup bila tekan luar modal
+window.addEventListener('click', function(e) {
+    const modal = document.getElementById('tncModal');
+    if (e.target === modal) {
+        closeTncModal();
+    }
+});
