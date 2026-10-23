@@ -223,35 +223,60 @@ function getSelectedCar() {
     return { carField, carName, carCard, dailyRate };
 }
 
-// Rate per jam mengikut kategori/model kereta
+// Jadual Pakej Harga Mengikut Hari (Selaras dengan Fleet Vehicles)
+const rentalPackages = {
+    'viva': { 1: 80, 3: 250, 7: 525, 14: 800, 30: 1200 },
+    'axia 2nd gen': { 1: 100, 3: 290, 7: 650, 14: 980, 30: 1600 },
+    'axia 3rd gen': { 1: 130, 3: 370, 7: 800, 14: 1100, 30: 1900 },
+    'myvi 2nd gen': { 1: 120, 3: 350, 7: 750, 14: 1000, 30: 1800 },
+    'myvi 3rd gen': { 1: 150, 3: 420, 7: 950, 14: 1300, 30: 2300 },
+    'bezza': { 1: 140, 3: 400, 7: 900, 14: 1200, 30: 2200 },
+    'saga': { 1: 140, 3: 400, 7: 900, 14: 1200, 30: 2200 },
+    'persona': { 1: 140, 3: 400, 7: 900, 14: 1200, 30: 2200 },
+    'vios': { 1: 180, 3: 450, 7: 1000, 14: 1700, 30: 2800 },
+    'city': { 1: 250, 3: 700, 7: 1500, 14: 2000, 30: 3500 },
+    'alza 1st gen': { 1: 170, 3: 440, 7: 1000, 14: 1600, 30: 2700 },
+    'alza 3rd gen': { 1: 230, 3: 650, 7: 1400, 14: 1800, 30: 3200 },
+    'innova 1st gen': { 1: 250, 3: 700, 7: 1500, 14: 2000, 30: 3000 },
+    'innova crysta': { 1: 300, 3: 850, 7: 1800, 14: 2300, 30: 3500 },
+    'aruz': { 1: 230, 3: 650, 7: 1400, 14: 1800, 30: 3200 },
+    'x70': { 1: 350, 3: 900, 7: 1800, 14: 2500, 30: 4000 },
+    'x50': { 1: 350, 3: 900, 7: 1800, 14: 2500, 30: 4000 },
+    'starex': { 1: 480, 3: 1350, 7: 2500, 14: 3000, 30: 5000 },
+    'staria': { 1: 650, 3: 1800, 7: 3600, 14: 5000, 30: 8000 },
+    'alphard': { 1: 750, 3: 2100, 7: 4000, 14: 6000, 30: 9000 },
+    'hiace': { 1: 350, 3: 900, 7: 1900, 14: 2500, 30: 4000 },
+    'urvan': { 1: 450, 3: 1200, 7: 2200, 14: 2700, 30: 4500 },
+    'placer': { 1: 550, 3: 1500, 7: 2500, 14: 3000, 30: 5000 }
+};
+
+// Rate per jam mengikut kategori/model kereta (Selaras dengan Fleet Vehicles)
 const hourlyRates = {
     'viva': 8,
     'axia 2nd gen': 10,
     'axia 3rd gen': 12,
     'myvi 2nd gen': 12,
-    'bezza': 15,
-    'saga': 15,
-    'persona': 15,
-    'myvi gen3': 15,
     'myvi 3rd gen': 15,
-    'alza 1st gen': 15,
+    'saga': 15,
+    'bezza': 15,
+    'persona': 15,
     'vios': 20,
     'city': 20,
+    'alza 1st gen': 15,
     'alza 3rd gen': 20,
-    'aruz': 20,
     'innova 1st gen': 20,
-    'innova 2nd gen': 30,
+    'innova crysta': 30,
+    'aruz': 20,
     'x70': 30,
     'x50': 30,
     'starex': 45,
+    'staria': 70,
+    'alphard': 90,
     'hiace': 45,
     'urvan': 45,
-    'placer': 45,
-    'staria': 70,
-    'alphard': 90
+    'placer': 45
 };
 
-// Fungsi bantuan untuk dapatkan rate per jam berdasarkan nama kereta
 function getHourlyRate(carName) {
     const nameLower = carName.toLowerCase();
     for (const [key, rate] of Object.entries(hourlyRates)) {
@@ -259,7 +284,41 @@ function getHourlyRate(carName) {
             return rate;
         }
     }
-    return 0; // Default jika tiada match
+    return 0;
+}
+
+function calculatePackageCost(carName, totalDays, dailyRateFallback) {
+    const nameLower = carName.toLowerCase();
+    let matchedPkg = null;
+
+    for (const [key, pkg] of Object.entries(rentalPackages)) {
+        if (nameLower.includes(key)) {
+            matchedPkg = pkg;
+            break;
+        }
+    }
+
+    if (!matchedPkg) {
+        return totalDays * dailyRateFallback;
+    }
+
+    let remainingDays = totalDays;
+    let totalCost = 0;
+    const tiers = [30, 14, 7, 3, 1];
+
+    for (let tier of tiers) {
+        if (remainingDays >= tier && matchedPkg[tier]) {
+            const multiplier = Math.floor(remainingDays / tier);
+            totalCost += multiplier * matchedPkg[tier];
+            remainingDays %= tier;
+        }
+    }
+
+    if (remainingDays > 0) {
+        totalCost += remainingDays * matchedPkg[1];
+    }
+
+    return Math.round(totalCost);
 }
 
 function updateCalculation() {
@@ -276,7 +335,6 @@ function updateCalculation() {
         return;
     }
 
-    // Dapatkan Tarikh & Masa Pickup & Return
     const pickDateVal = document.getElementById('pickDate').value;
     const pickTimeVal = document.getElementById('pickTime').value || "10:00";
     const returnDateVal = document.getElementById('returnDate').value;
@@ -287,39 +345,42 @@ function updateCalculation() {
     const pickDateTime = new Date(`${pickDateVal}T${pickTimeVal}`);
     const returnDateTime = new Date(`${returnDateVal}T${returnTimeVal}`);
 
-    // Kira jumlah jam (total hours)
     let totalHours = 0;
     if (returnDateTime > pickDateTime) {
         const diffMs = returnDateTime - pickDateTime;
-        totalHours = Math.ceil(diffMs / (1000 * 60 * 60)); // Buka baki minit ke jam terdekat
+        totalHours = Math.ceil(diffMs / (1000 * 60 * 60)); 
     } else {
-        totalHours = 24; // Default minimum 1 hari (24 jam) jika tarikh tidak sah
+        totalHours = 24; 
     }
 
-    // 1. Kira Bilangan Hari & Jam Lebihan mengikut Syarat Client
     let baseDays = Math.floor(totalHours / 24);
     let extraHours = totalHours % 24;
 
-    // SYARAT CLIENT: Jika lebihan jam >= 10 jam, kira terus sebagai 1 HARI TAMBAHAN
     if (extraHours >= 10) {
         baseDays += 1;
         extraHours = 0;
     }
 
-    // Kebalikan jika totalHours kurang dari 24 jam tapi melebihi 0 (minimum 1 hari)
     if (baseDays === 0) {
         baseDays = 1;
         extraHours = 0;
     }
 
-    // 2. Dapatkan Kadar Per Jam Kereta
     const carName = document.getElementById('mainCarSelect').value;
     const hourlyRate = getHourlyRate(carName);
 
-    // 3. Kira Kos Sewaan Kereta (Hari + Jam Lebihan)
-    const carRentalCost = (baseDays * dailyRate) + (extraHours * hourlyRate);
+    // Kira Kos Pakej vs Kos Asal (untuk kesan penjimatan/diskaun)
+    const standardCostWithoutPackage = baseDays * dailyRate;
+    const packageCost = calculatePackageCost(carName, baseDays, dailyRate);
+    const extraHourCost = extraHours * hourlyRate;
+    const carRentalCost = packageCost + extraHourCost;
 
-    // 4. Dapatkan caj penghantaran (Delivery Fee)
+    // Kira jumlah penjimatan (Perbandingan kos standard vs kos pakej + jam lebihan)
+    const standardTotalCost = (baseDays * dailyRate) + (extraHours * hourlyRate);
+    let savingsAmount = standardTotalCost - carRentalCost;
+    if (savingsAmount < 5) savingsAmount = 0; // Tunjuk jika penjimatan bernilai RM5 ke atas
+
+    // Delivery Fee
     const pickupLocationText = document.getElementById('pickupLocation').value.toLowerCase();
     let deliveryFee = 0;
 
@@ -335,27 +396,28 @@ function updateCalculation() {
         deliveryFee = 20;
     }
 
-    // 5. Kira Add-ons
+    // Add-ons
     let addOnsTotal = 0;
+    let addOnsDetails = [];
     const addonInputs = document.querySelectorAll('.addon-qty');
     addonInputs.forEach(input => {
         const price = parseInt(input.getAttribute('data-price')) || 0;
         const qty = parseInt(input.value) || 0;
         if (qty > 0) {
+            // Ambil tajuk utama add-on sahaja (elak ambil description di bawahnya)
+            const addonName = input.closest('.addon-row').querySelector('div > div:first-child').innerText;
             addOnsTotal += (price * qty);
+            addOnsDetails.push(`- ${addonName} x${qty} (RM ${price * qty})`);
         }
     });
 
-    // 6. Jumlah Keseluruhan
     const grandTotal = carRentalCost + deliveryFee + addOnsTotal;
 
-    // 7. Text Paparan Tempoh Hari & Jam
     let durationText = `${baseDays} day(s)`;
     if (extraHours > 0) {
         durationText += ` + ${extraHours} hr(s)`;
     }
 
-    // 8. Formatting Pecahan Harga (Side-by-side)
     let priceMainText = `RM ${grandTotal}`;
     let breakdownParts = [`RM ${carRentalCost}`];
 
@@ -368,7 +430,12 @@ function updateCalculation() {
 
     let priceSubText = breakdownParts.length > 1 ? `(${breakdownParts.join(' + ')})` : '';
 
-  // Update paparan hari dan jumlah harga pada skrin dengan lebih kemas
+    // Paparan nota diskaun/penjimatan jika layak mendapat harga pakej
+    let offerNoteHtml = '';
+    if (savingsAmount > 0 && baseDays >= 3) {
+        offerNoteHtml = `<div style="font-size: 0.7rem; color: #10b981; font-weight: 600; margin-top: 2px;">Package Offer Applied! You save approx. RM ${Math.round(savingsAmount)}</div>`;
+    }
+
     document.getElementById('sumDays').innerText = durationText;
     document.getElementById('sumTotalPrice').innerHTML = `
         <div style="display: flex; flex-direction: column; gap: 2px;">
@@ -376,11 +443,12 @@ function updateCalculation() {
                 <span style="font-size: 1.3rem; font-weight: 700; color: var(--accent-red, #ef4444);">${priceMainText}</span>
                 ${priceSubText ? `<span style="font-size: 0.78rem; color: var(--text-secondary, #9ca3af); font-weight: normal;">${priceSubText}</span>` : ''}
             </div>
+            ${offerNoteHtml}
         </div>
     `;
 }
 
-// WhatsApp Booking Trigger
+// WhatsApp Booking Trigger (Diselaraskan menggunakan calculatePackageCost)
 function sendBookingToWhatsApp() {
     const { carField, carName, carCard, dailyRate } = getSelectedCar();
     if (!carCard) {
@@ -407,7 +475,6 @@ function sendBookingToWhatsApp() {
     const pickDateTime = new Date(`${pickDateVal}T${pickTimeVal}`);
     const returnDateTime = new Date(`${returnDateVal}T${returnTimeVal}`);
 
-    // 1. Kira jumlah jam & hari mengikut syarat jam lebihan
     let totalHours = 0;
     if (returnDateTime > pickDateTime) {
         const diffMs = returnDateTime - pickDateTime;
@@ -428,11 +495,12 @@ function sendBookingToWhatsApp() {
         extraHours = 0;
     }
 
-    // 2. Kira kos kereta (Hari + Jam lebihan)
     const hourlyRate = getHourlyRate(carName);
-    const carRentalCost = dailyRate !== null ? (baseDays * dailyRate) + (extraHours * hourlyRate) : 0;
+    const packageCost = calculatePackageCost(carName, baseDays, dailyRate);
+    const extraHourCost = extraHours * hourlyRate;
+    const carRentalCost = dailyRate !== null ? packageCost + extraHourCost : 0;
 
-    // 3. Kira Delivery Fee
+    // Delivery Fee
     const pickupLocationText = pickupLocation.toLowerCase();
     let deliveryFee = 0;
     if (pickupLocationText.includes('batu ferringhi')) {
@@ -447,7 +515,7 @@ function sendBookingToWhatsApp() {
         deliveryFee = 20;
     }
 
-    // 4. Kira Add-ons & Senarai untuk mesej WhatsApp
+    // Add-ons
     let addOnsTotal = 0;
     let addOnsDetails = [];
     const addonInputs = document.querySelectorAll('.addon-qty');
@@ -461,16 +529,13 @@ function sendBookingToWhatsApp() {
         }
     });
 
-    // 5. Grand Total
     const grandTotal = dailyRate !== null ? carRentalCost + deliveryFee + addOnsTotal : null;
 
-    // 6. Format Teks Tempoh
     let durationText = `${baseDays} day(s)`;
     if (extraHours > 0) {
         durationText += ` + ${extraHours} hr(s)`;
     }
 
-    // 7. Format Estimasi Harga untuk Mesej
     let estimatedTotal = 'To be confirmed';
     if (grandTotal !== null) {
         let breakdown = [`RM ${carRentalCost} car`];
@@ -479,7 +544,6 @@ function sendBookingToWhatsApp() {
         estimatedTotal = `RM ${grandTotal} (${breakdown.join(' + ')})`;
     }
 
-    // 8. Bina Mesej WhatsApp (Guna Bullet Point Biasa)
     const textMsg = `Hello AZ Pinnacle Auto (Penang Car Rental),\n` +
                     `I would like to check if a car is available:\n\n` +
                     `- Car model: ${carName}\n` +

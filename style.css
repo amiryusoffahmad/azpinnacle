@@ -316,19 +316,44 @@ html[data-theme="light"] .hero-desc { color: #27272a; font-weight: 500; }
     overflow: hidden; transition: all var(--transition-speed); display: flex; flex-direction: column;
 }
 .car-card:hover { border-color: var(--accent-red); transform: translateY(-4px); box-shadow: 0 10px 25px -5px var(--accent-red-glow); }
-.car-image-box { height: 190px; width: 100%; overflow: hidden; position: relative; border-bottom: 1px solid var(--border-color); background: #ffffff; }
+
+/* Kotak Gambar Kereta (Cerah & Jelas pada Dark Mode / Light Mode) */
+.car-image-box { 
+    height: 190px; 
+    width: 100%; 
+    overflow: hidden; 
+    position: relative; 
+    border-bottom: 1px solid var(--border-color); 
+    background: #ffffff; 
+}
+html[data-theme="dark"] .car-image-box {
+    background: #ffffff; 
+}
+
 .car-image-box img { width: 100%; height: 100%; object-fit: contain; object-position: center; background-color: #ffffff; transition: transform 0.4s ease; }
 .car-image-box.image-framing-tight img { object-fit: cover; object-position: center 42%; }
 .car-card:hover .car-image-box img { transform: scale(1.04); }
-.car-tag-category { position: absolute; top: 10px; left: 10px; background-color: rgba(9, 9, 11, 0.75); color: #ffffff; padding: 4px 10px; border-radius: var(--radius-full); font-size: 0.7rem; }
+.car-tag-category { position: absolute; top: 10px; left: 10px; background-color: rgba(9, 9, 11, 0.75); color: #ffffff; padding: 4px 10px; border-radius: var(--radius-full); font-size: 0.7rem; z-index: 2; }
 
 .car-details { padding: 18px; display: flex; flex-direction: column; flex-grow: 1; }
 .car-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; }
-.car-specs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 16px; padding: 12px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
-.vehicle-spec { display: flex; min-width: 0; flex-direction: column; align-items: center; gap: 5px; text-align: center; }
-.vehicle-spec-icon { width: 22px; height: 22px; color: #1685e8; }
-.vehicle-spec-label { color: var(--text-muted); font-size: 0.65rem; line-height: 1.1; }
-.vehicle-spec-value { color: var(--text-primary); font-size: 0.75rem; font-weight: 600; line-height: 1.2; }
+
+/* Spesifikasi Sebaris 1 Baris Melintang */
+.car-specs { 
+    display: grid; 
+    grid-template-columns: repeat(4, minmax(0, 1fr)); 
+    gap: 4px; 
+    margin-bottom: 16px; 
+    padding: 10px 4px; 
+    border-top: 1px solid var(--border-color); 
+    border-bottom: 1px solid var(--border-color); 
+    width: 100%;
+}
+.vehicle-spec { display: flex; min-width: 0; flex-direction: column; align-items: center; gap: 3px; text-align: center; }
+.vehicle-spec-icon { width: 20px; height: 20px; color: #1685e8; }
+.vehicle-spec-label { color: var(--text-muted); font-size: 0.62rem; line-height: 1.1; white-space: nowrap; }
+.vehicle-spec-value { color: var(--text-primary); font-size: 0.72rem; font-weight: 600; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+
 .car-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
 .car-price-box .price-amount { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); }
 .car-price-box .price-unit { font-size: 0.75rem; color: var(--text-muted); }
@@ -538,7 +563,6 @@ html[data-theme="light"] .hero-desc { color: #27272a; font-weight: 500; }
    FIT-CONTENT COMPACT SEARCH FORM (DURASI & UKURAN FLEKSIBEL)
    ========================================== */
 
-/* 1. Mengubah ikon kalender & jam bawaan browser menjadi warna putih pada Dark Mode */
 html[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator,
 html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator {
     filter: invert(1) brightness(0.9);
@@ -553,10 +577,9 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
     opacity: 1;
 }
 
-/* 2. Container Utama Pencarian */
 .hero-search-box.compact-search {
     width: 100%;
-    max-width: 1000px; /* Melebarkan ukuran container utama */
+    max-width: 1000px;
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
@@ -566,7 +589,6 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
     backdrop-filter: blur(12px);
 }
 
-/* Search fields in a clean two-row layout */
 .compact-form-row {
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -604,7 +626,6 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
     letter-spacing: 0.01em;
 }
 
-/* Dasar Input */
 .compact-input {
     width: 100%;
     background-color: var(--bg-input);
@@ -622,7 +643,6 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
     box-shadow: 0 0 0 2px var(--accent-red-glow);
 }
 
-/* Layout Sejajar Tanggal + Waktu */
 .compact-inline-inputs {
     display: flex;
     gap: 6px;
@@ -634,7 +654,6 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
     min-width: 125px;
 }
 
-/* Input Waktu (Time Picker) */
 .time-pick {
     width: 115px !important;
     flex-shrink: 0;
@@ -671,16 +690,6 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
     margin-top: 15px;
     padding-top: 15px;
     border-top: 1px solid var(--border-color, #27272a);
-}
-
-.total-price-text {
-    display: flex;
-    flex-direction: column;
-}
-
-.total-price-text span {
-    font-size: 0.85rem;
-    color: var(--text-secondary, #9ca3af);
 }
 
 .total-price-text {
@@ -806,6 +815,8 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
     .filter-btn { flex: 0 0 auto; padding: 8px 14px; }
     .cars-grid { gap: 14px; }
     .car-card { min-width: 0; }
+    
+    /* Elak gambar gelap di bawah 560px */
     .car-image-box {
         flex: none;
         width: 100%;
@@ -813,11 +824,9 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
         min-height: 0;
         border-right: 0;
         border-bottom: 1px solid var(--border-color);
-        mix-blend-mode: multiply; /* Membuang latar belakang putih jika mod cerah, tapi kalau dark mode boleh guna drop-shadow atau invert */
-        background-color: transparent;
-    object-fit: contain;
-    /* Tambah sedikit kesan seragam jika gambar ada latar putih */
-    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+        background-color: #ffffff;
+        object-fit: contain;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
     }
     .car-image-box img { position: absolute; inset: 0; }
     .car-tag-category { top: 8px; left: 7px; padding: 4px 7px; font-size: 0.62rem; }
@@ -871,7 +880,7 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
 }
 
 .total-price-text strong {
-    font-size: 1.3rem; /* Laraskan saiz ikut selera */
+    font-size: 1.3rem;
     color: var(--accent-red, #9f1239);
     display: inline-block;
 }
