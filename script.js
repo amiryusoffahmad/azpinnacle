@@ -450,6 +450,13 @@ function updateCalculation() {
 
 // WhatsApp Booking Trigger (Diselaraskan menggunakan calculatePackageCost)
 function sendBookingToWhatsApp() {
+    const customerNameField = document.getElementById('customerName');
+    const customerName = customerNameField.value.trim();
+    customerNameField.setCustomValidity(customerName ? '' : 'Please enter your name.');
+    if (!customerNameField.reportValidity()) {
+        return;
+    }
+
     const { carField, carName, carCard, dailyRate } = getSelectedCar();
     if (!carCard) {
         carField.setCustomValidity('Choose a car from the list.');
@@ -546,6 +553,7 @@ function sendBookingToWhatsApp() {
 
     const textMsg = `Hello AZ Pinnacle Auto (Penang Car Rental),\n` +
                     `I would like to check if a car is available:\n\n` +
+                    `- Customer name: ${customerName}\n` +
                     `- Car model: ${carName}\n` +
                     `- Driving option: ${driverLabel}\n` +
                     `- Pickup location: ${pickupLocation}\n` +

@@ -591,7 +591,7 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
 
 .compact-form-row {
     display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 14px 16px;
     width: 100%;
     margin-bottom: 14px;
@@ -604,16 +604,17 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
 }
 
 .compact-location {
-    grid-column: span 2;
+    grid-column: span 3;
     min-width: 0;
 }
 
-.compact-car-select {
-    grid-column: span 2;
+.compact-car-select,
+.compact-customer-name {
+    grid-column: span 3;
 }
 
 .compact-date-group {
-    grid-column: span 3;
+    grid-column: span 6;
     min-width: 0;
 }
 
@@ -735,12 +736,13 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
     }
 
     .compact-location,
-    .compact-date-group {
+    .compact-date-group,
+    .compact-customer-name {
         grid-column: span 1;
     }
 
     .compact-car-select {
-        grid-column: 1 / -1;
+        grid-column: span 1;
     }
 
     .compact-inline-inputs input[type="date"] {
@@ -775,6 +777,7 @@ html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator:ho
     }
     .compact-location,
     .compact-car-select,
+    .compact-customer-name,
     .compact-date-group {
         grid-column: auto;
     }
